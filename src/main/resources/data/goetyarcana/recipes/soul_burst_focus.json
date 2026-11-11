@@ -1,0 +1,39 @@
+{
+  "type": "goety:ritual",
+  "ritual_type": "goety:craft",
+  "activation_item": {
+    "item": "goety:void_block"
+  },
+  "craftType": "end",
+  "soulCost": 20,
+  "duration": 30,
+  "ingredients": [
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "goety:void_echo"
+    },
+    {
+      "item": "goety:void_echo"
+    },
+    {
+      "item": "goety:void_echo"
+    },
+    {
+      "item": "goety:void_echo"
+    }
+  ],
+  "result": {
+    "item": "goetyarcana:soul_burst_focus"
+  }
+}

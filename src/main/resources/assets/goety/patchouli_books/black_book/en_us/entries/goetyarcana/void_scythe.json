@@ -1,0 +1,24 @@
+{
+  "name": "Void Scythe",
+  "icon": "goetyarcana:void_scythe",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Void Scythe",
+      "text": "A two-handed scythe that carries the void's hunger into every swing. Its 360° sweep strikes all nearby enemies, and a charged strike releases a crescent wave that pierces creatures and passes through walls for five seconds."
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_scythe"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Void Erosion & Execution",
+      "text": "Sweeps apply Void Erosion, while every hit has a small chance to mark the target for Execution. When the mark expires, a giant scythe descends and the target is judged: ordinary foes are erased, elites and bosses lose a portion of their maximum health."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_scythe": 1
+  }
+}

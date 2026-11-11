@@ -1,0 +1,7 @@
+{
+  "parent": "goety:item/scythe",
+  "textures": {
+    "layer0": "goetyarcana:item/void_scythe_charging",
+    "layer1": "goetyarcana:item/void_scythe_aura"
+  }
+}

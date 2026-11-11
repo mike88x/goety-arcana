@@ -1,0 +1,8 @@
+{
+  "parent": "goety:item/scythe",
+  "textures": {
+    "layer0": "goetyarcana:item/void_scythe_charged",
+    "layer1": "goetyarcana:item/void_scythe_aura_charged",
+    "layer2": "goetyarcana:item/void_scythe_aura_charged"
+  }
+}

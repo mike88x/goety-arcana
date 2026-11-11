@@ -1,0 +1,12 @@
+{
+  "name": "Void Crossbow (Planned)",
+  "icon": "minecraft:crossbow",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Void Crossbow",
+      "text": "A planned Goety Arcana weapon. It would fire void-charged bolts that leave a short-lived rift on impact. This page is currently a design note only; the item, model, recipe and mechanics are not implemented yet."
+    }
+  ]
+}

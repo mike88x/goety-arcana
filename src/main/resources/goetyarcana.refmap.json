@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "com/goetyarcana/mixin/HumanoidModelMixin": {
+      "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V": "Lnet/minecraft/client/model/HumanoidModel;m_6973_(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V"
+    }
+  },
+  "data": {
+    "searge": {
+      "com/goetyarcana/mixin/HumanoidModelMixin": {
+        "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V": "Lnet/minecraft/client/model/HumanoidModel;m_6973_(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V"
+      }
+    }
+  }
+}

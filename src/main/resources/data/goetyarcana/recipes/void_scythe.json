@@ -1,0 +1,27 @@
+{
+  "type": "goety:ritual",
+  "ritual_type": "goety:craft",
+  "activation_item": {
+    "item": "goety:dark_metal_scythe"
+  },
+  "craftType": "end",
+  "soulCost": 5,
+  "duration": 12,
+  "ingredients": [
+    {
+      "item": "goety:void_echo"
+    },
+    {
+      "item": "goety:void_echo"
+    },
+    {
+      "item": "goety:magic_emerald"
+    },
+    {
+      "item": "goety:magic_emerald"
+    }
+  ],
+  "result": {
+    "item": "goetyarcana:void_scythe"
+  }
+}

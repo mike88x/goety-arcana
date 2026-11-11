@@ -1,0 +1,19 @@
+{
+  "item.goetyarcana.soul_burst_focus": "Soul Burst Focus",
+  "item.goetyarcana.soul_burst_focus.info": "Hurls a shard of condensed void: 6 flat damage plus 7.5% of the target's max health, and not even a boss's damage cap can blunt it. Cast with a Void Staff to inflict Void Touched and steal the target's boons.",
+  "death.attack.soulBurst": "%1$s was swallowed by the void",
+  "death.attack.soulBurst.player": "%1$s was swallowed by %2$s's soul burst",
+  "itemGroup.goetyarcana": "Goety Arcana",
+  "item.goetyarcana.void_scythe": "Void Scythe",
+  "item.goetyarcana.void_scythe.stats": "13 attack damage · 0.9 attack speed · 360° sweep",
+  "item.goetyarcana.void_scythe.charge": "Hold right-click to charge with both hands; release a piercing scythe wave (5s, passes through walls)",
+  "item.goetyarcana.void_scythe.effects": "On hit: 70% Void Touched I / 30% Void Touched II; 5% Execution",
+  "item.goetyarcana.void_scythe.creative_only": "Crafted by the End Ritual · requires a Dark Metal Scythe",
+  "entity.goetyarcana.scythe_wave": "Void Scythe Wave",
+  "effect.goetyarcana.execution": "Execution",
+  "effect.goetyarcana.execution.description": "After 5 seconds: normal enemies die instantly, elites lose 10% max health, bosses lose 20% max health (ignores boss damage caps).",
+  "death.attack.voidWave": "%1$s was torn apart by a void scythe wave",
+  "death.attack.voidWave.player": "%1$s was torn apart by %2$s's void scythe wave",
+  "death.attack.execution": "%1$s was executed",
+  "death.attack.execution.player": "%1$s was executed by %2$s"
+}

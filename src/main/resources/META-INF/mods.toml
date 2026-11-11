@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="goetyarcana"
+version="${file.jarVersion}"
+displayName="Goety Arcana"
+description='''
+为诡厄巫法（Goety）添加聚晶、武器与其它奥术物品，不限于单一法术学派，后续会持续扩充。
+An addon for Goety adding focuses, weapons, and other arcane items — not limited to a single spell school.
+
+目前包含 / Currently included:
+- 裂魂聚晶 (Soul Burst Focus, Void)
+- 虚空镰刀 (Void Scythe, End Ritual weapon with a piercing, wall-phasing wave)
+'''
+
+[[dependencies.goetyarcana]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.goetyarcana]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.goetyarcana]]
+    modId="goety"
+    mandatory=true
+    versionRange="[2.5.0,)"
+    ordering="AFTER"
+    side="BOTH"

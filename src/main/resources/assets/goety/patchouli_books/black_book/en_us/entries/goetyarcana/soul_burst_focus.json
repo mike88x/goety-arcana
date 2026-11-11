@@ -1,0 +1,18 @@
+{
+  "name": "Soul Burst Focus",
+  "icon": "goetyarcana:soul_burst_focus",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A focus torn from the space between worlds. It hurls a shard of condensed void that deals a flat amount of damage plus a share of the target's maximum health.$(br2)Because the bolt is made of pure void, not even a boss's damage limit can blunt it.$(br2)Cast through a $(bold)Void Staff$(), the bolt also erodes the target with Void Touched and tears every boon off its body, granting them to the caster - and it bursts on impact, tearing at nearby foes as well."
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_burst_focus"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:soul_burst_focus": 1
+  }
+}

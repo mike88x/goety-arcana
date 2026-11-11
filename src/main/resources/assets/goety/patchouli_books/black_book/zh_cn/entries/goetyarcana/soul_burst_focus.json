@@ -1,0 +1,18 @@
+{
+  "name": "裂魂聚晶",
+  "icon": "goetyarcana:soul_burst_focus",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "从世界与世界之间的缝隙里撕下来的一枚聚晶。它射出一块凝聚的虚空，造成固定伤害，并额外附加目标最大生命值的一部分。$(br2)因为这枚弹体本身就是虚空，连 Boss 的伤害上限也无法削减它。$(br2)以$(bold)虚空魔杖$()施放时，弹体还会给目标烙上虚空之蚀，并把目标身上的正面效果全部剥离、转移到施法者身上——命中时还会炸开，波及周围的敌人。"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_burst_focus"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:soul_burst_focus": 1
+  }
+}

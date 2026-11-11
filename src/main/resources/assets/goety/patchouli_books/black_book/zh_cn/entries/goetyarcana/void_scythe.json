@@ -1,0 +1,24 @@
+{
+  "name": "虚空镰刀",
+  "icon": "goetyarcana:void_scythe",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "虚空镰刀",
+      "text": "一把把虚空的饥渴带进每一次挥砍的双手镰刀。左键进行 360° 横扫，命中周围所有敌人；右键蓄力后松开，会释放一道可穿透生物、穿墙飞行 5 秒的月牙剑气。"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_scythe"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "虚空之蚀与处决",
+      "text": "横扫会施加虚空之蚀；每次命中有小概率给目标挂上处决标记。标记结束时，一把巨型镰刀斩下进行裁决：普通敌人被直接抹除，精英与 Boss 则损失一部分最大生命值。"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_scythe": 1
+  }
+}

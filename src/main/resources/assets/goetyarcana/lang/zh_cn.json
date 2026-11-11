@@ -1,0 +1,19 @@
+{
+  "item.goetyarcana.soul_burst_focus": "裂魂聚晶",
+  "item.goetyarcana.soul_burst_focus.info": "射出一枚凝聚的虚空之弹：造成 6 点固定伤害与目标最大生命值 7.5% 的伤害，且无视 Boss 的伤害上限。以虚空魔杖施放时，还会附加虚空之蚀，并夺走目标身上的正面效果。",
+  "death.attack.soulBurst": "%1$s 被虚空吞没",
+  "death.attack.soulBurst.player": "%1$s 被 %2$s 的灵魂弹吞没",
+  "itemGroup.goetyarcana": "诡厄奥术",
+  "item.goetyarcana.void_scythe": "虚空镰刀",
+  "item.goetyarcana.void_scythe.stats": "13 攻击伤害 · 0.9 攻击速度 · 360° 横扫",
+  "item.goetyarcana.void_scythe.charge": "按住右键双手蓄力，松开释放穿透剑气（持续 5 秒，可穿墙）",
+  "item.goetyarcana.void_scythe.effects": "命中：70% 虚空之蚀 I / 30% 虚空之蚀 II；5% 处决",
+  "item.goetyarcana.void_scythe.creative_only": "末地仪式合成 · 需黑暗镰刀",
+  "entity.goetyarcana.scythe_wave": "虚空剑气",
+  "effect.goetyarcana.execution": "处决",
+  "effect.goetyarcana.execution.description": "5 秒后结算：普通敌人立即死亡，精英损失 10% 最大生命值，Boss 损失 20% 最大生命值（无视 Boss 限伤）。",
+  "death.attack.voidWave": "%1$s 被虚空剑气撕碎",
+  "death.attack.voidWave.player": "%1$s 被 %2$s 的虚空剑气撕碎",
+  "death.attack.execution": "%1$s 被处决",
+  "death.attack.execution.player": "%1$s 被 %2$s 处决"
+}

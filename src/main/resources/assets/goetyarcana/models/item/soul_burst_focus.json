@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "goetyarcana:item/soul_burst_focus"
+  }
+}

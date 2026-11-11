@@ -1,0 +1,27 @@
+{
+  "parent": "goety:item/scythe",
+  "textures": {
+    "layer0": "goetyarcana:item/void_scythe",
+    "layer1": "goetyarcana:item/void_scythe_aura"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "goetyarcana:charge": 0.01
+      },
+      "model": "goetyarcana:item/void_scythe_charging"
+    },
+    {
+      "predicate": {
+        "goetyarcana:charge": 0.45
+      },
+      "model": "goetyarcana:item/void_scythe_charging_half"
+    },
+    {
+      "predicate": {
+        "goetyarcana:charge": 0.99
+      },
+      "model": "goetyarcana:item/void_scythe_charged"
+    }
+  ]
+}

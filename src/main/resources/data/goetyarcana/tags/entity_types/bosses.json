@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ender_dragon",
+    "minecraft:wither",
+    "goety:apostle",
+    "goety:ender_keeper",
+    "goety:vizier",
+    "goety:hostile_redstone_monstrosity"
+  ]
+}

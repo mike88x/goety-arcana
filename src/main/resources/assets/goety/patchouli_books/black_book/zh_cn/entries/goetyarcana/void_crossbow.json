@@ -1,0 +1,12 @@
+{
+  "name": "虚空弩（规划中）",
+  "icon": "minecraft:crossbow",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "虚空弩",
+      "text": "Goety Arcana 的规划武器：发射充能虚空弩矢，命中后短暂留下虚空裂隙。目前仅为设计文本，物品、模型、配方和实际机制都还没有实装。"
+    }
+  ]
+}
