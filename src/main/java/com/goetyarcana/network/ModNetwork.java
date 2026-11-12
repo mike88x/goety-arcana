@@ -1,22 +1,30 @@
 package com.goetyarcana.network;
 
 import com.goetyarcana.GoetyArcanaMod;
+import com.goetyarcana.client.ExecutionDeathAnimation;
 import com.goetyarcana.combat.ScytheCombat;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Supplier;
 
 /**
- * 极简网络通道：只用于「左键空气」时把 360° 横扫请求发到服务端。
+ * 极简网络通道。
  *
- * <p>左键方块和左键实体会在服务端直接触发，不需要这个包；
- * 只有空中挥刀在原版里没有服务端事件，所以补一个空包。</p>
+ * <ul>
+ *   <li>C2S：左键空气时把 360° 横扫请求发到服务端；</li>
+ *   <li>S2C：被处决致死的怪物，通知附近客户端播放专属死亡动画。</li>
+ * </ul>
  */
 public final class ModNetwork {
 
@@ -35,10 +43,32 @@ public final class ModNetwork {
                 .decoder(ScytheSwingPacket::decode)
                 .consumerMainThread(ScytheSwingPacket::handle)
                 .add();
+
+        CHANNEL.messageBuilder(ExecutionDeathPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ExecutionDeathPacket::encode)
+                .decoder(ExecutionDeathPacket::decode)
+                .consumerMainThread(ExecutionDeathPacket::handle)
+                .add();
     }
 
     public static void sendScytheSwing() {
         CHANNEL.sendToServer(new ScytheSwingPacket());
+    }
+
+    /**
+     * 把「某只怪物被处决致死」告诉看得见它的玩家。
+     *
+     * <p>只发给 96 格内的玩家，避免全服广播；客户端收到后会给这只怪物套上
+     * 20 tick 的虚空湮灭动画（{@link ExecutionDeathAnimation}）。</p>
+     */
+    public static void sendExecutionDeath(ServerLevel level, Entity target) {
+        ExecutionDeathPacket packet = new ExecutionDeathPacket(target.getId());
+        double range = 96.0D * 96.0D;
+        for (ServerPlayer player : level.players()) {
+            if (player.distanceToSqr(target) <= range) {
+                CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+            }
+        }
     }
 
     public record ScytheSwingPacket() {
@@ -58,6 +88,25 @@ public final class ModNetwork {
                     ScytheCombat.trySweep(sender);
                 }
             });
+            context.setPacketHandled(true);
+        }
+    }
+
+    /** 处决死亡动画通知；客户端在 {@link ExecutionDeathAnimation} 里消费。 */
+    public record ExecutionDeathPacket(int entityId) {
+
+        public static void encode(ExecutionDeathPacket packet, FriendlyByteBuf buffer) {
+            buffer.writeVarInt(packet.entityId());
+        }
+
+        public static ExecutionDeathPacket decode(FriendlyByteBuf buffer) {
+            return new ExecutionDeathPacket(buffer.readVarInt());
+        }
+
+        public static void handle(ExecutionDeathPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
+            NetworkEvent.Context context = contextSupplier.get();
+            context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                    () -> () -> ExecutionDeathAnimation.onPacket(packet.entityId())));
             context.setPacketHandled(true);
         }
     }

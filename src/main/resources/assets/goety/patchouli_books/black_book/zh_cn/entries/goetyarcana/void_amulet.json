@@ -1,0 +1,12 @@
+{
+  "name": "虚空护身符（规划中）",
+  "icon": "minecraft:echo_shard",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "虚空护身符",
+      "text": "该物品尚未实装，此页仅为占位。"
+    }
+  ]
+}

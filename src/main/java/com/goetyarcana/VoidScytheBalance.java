@@ -57,6 +57,13 @@ public final class VoidScytheBalance {
     /** 处决 debuff 结束后，专属斩击动画的蓄势时间（tick），随后才真正结算。 */
     public static final int EXECUTION_ANIMATION_TICKS = 12;
 
+    /**
+     * 被处决致死的怪物，其死亡动画持续 tick。
+     *
+     * <p>与原版尸体存在的 20 tick 对齐：尸体消失前正好完成「被虚空吸走」的动画。</p>
+     */
+    public static final int EXECUTION_DEATH_TICKS = 20;
+
     /** 处决结束时，精英怪损失的最大生命值比例。 */
     public static final float EXECUTION_ELITE_PERCENT = 0.10F;
 
@@ -98,17 +105,33 @@ public final class VoidScytheBalance {
     /** 剑气生成点沿视线前移的距离（格），避免贴脸时看不见。 */
     public static final double WAVE_SPAWN_OFFSET = 1.0D;
 
-    /** 最低蓄力的剑气宽度（格，横向）。 */
-    public static final double WAVE_MIN_WIDTH = 2.4D;
+    /**
+     * 最低蓄力的剑气宽度（格，横向）。
+     *
+     * <p>横向剑气是一道横着铺开的刀刃，宽高比约为 2:1。</p>
+     */
+    public static final double WAVE_MIN_WIDTH = 3.0D;
 
     /** 满蓄力的剑气宽度（格，横向）。 */
-    public static final double WAVE_MAX_WIDTH = 6.0D;
+    public static final double WAVE_MAX_WIDTH = 7.0D;
 
     /** 最低蓄力的剑气高度（格，纵向）。 */
-    public static final double WAVE_MIN_HEIGHT = 2.2D;
+    public static final double WAVE_MIN_HEIGHT = 1.6D;
 
     /** 满蓄力的剑气高度（格，纵向）。 */
-    public static final double WAVE_MAX_HEIGHT = 5.0D;
+    public static final double WAVE_MAX_HEIGHT = 3.0D;
+
+    /** 起飞阶段平滑加速所用的 tick。 */
+    public static final int WAVE_LAUNCH_TICKS = 4;
+
+    /** 寿命最后多少 tick 开始平滑减速。 */
+    public static final int WAVE_DISSIPATE_TICKS = 12;
+
+    /** 起飞瞬间的速度倍率（随后平滑升到 1.0）。 */
+    public static final float WAVE_LAUNCH_SPEED = 0.50F;
+
+    /** 消散前的速度倍率（从 1.0 平滑降到这个值）。 */
+    public static final float WAVE_END_SPEED = 0.75F;
 
     /**
      * 剑气命中判定的厚度（格，沿飞行方向）。

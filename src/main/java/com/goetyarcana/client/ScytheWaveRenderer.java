@@ -16,24 +16,34 @@ import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
 
 /**
- * 虚空剑气渲染。
+ * 虚空剑气渲染：一道<b>横向</b>铺开的能量刃。
  *
- * <p>剑气现在是一道向前飞行的斩击，所以不再画“以玩家为中心扩散的弧形墙”，
- * 而是画一片面向镜头的月牙形能量刃：</p>
+ * <p>旧版把月牙贴片直接当广告牌面向镜头，看起来像一片圆形光斑。
+ * 现在贴图本身就是横向的刃形（亮白刃芯 + 紫色刃身 + 青色刃缘），渲染时：</p>
  * <ul>
- *   <li>外层：大一圈的柔光月牙；</li>
- *   <li>中层：主刃，颜色偏紫；</li>
- *   <li>内层：接近白色的高光刃芯。</li>
+ *   <li>按实体朝向（{@code yRot} 的 tick 间插值）把刃面转到<b>垂直于飞行方向</b>；</li>
+ *   <li>按俯仰角把刃面顺着视线抬起/压下，上下坡时不会变成竖直贴片；</li>
+ *   <li>叠加一层沿飞行反方向的淡残影，强化“平滑掠过”的速度感；</li>
+ *   <li>出现时 2.5 tick 淡入、寿命末尾按 {@code 1 - progress²} 淡出，不会突兀地闪现/消失。</li>
  * </ul>
- *
- * <p>三层叠加 + 自定义虚空火拖尾，飞行时始终保持可读的月牙轮廓；
- * 蓄力越高，月牙的宽度/高度越大。</p>
  */
 public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
 
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(GoetyArcanaMod.MOD_ID, "textures/entity/scythe_wave.png");
     private static final int FULL_LIGHT = 0xF000F0;
+
+    /**
+     * 横向刃形贴图（128×128）里真正有内容的区域。
+     *
+     * <p>贴图四周留了大片透明像素；如果直接按整张贴图铺满四边形，
+     * 刃身会被透明留白压成一条很细的线、还会偏到下半边。这里只采样
+     * 刃形所在的横向条带（y 40~96），让渲染尺寸与命中盒一致并保持居中。</p>
+     */
+    private static final float U0 = 0.0F;
+    private static final float U1 = 1.0F;
+    private static final float V0 = 40.0F / 128.0F;
+    private static final float V1 = 96.0F / 128.0F;
 
     public ScytheWaveRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -50,25 +60,40 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
         float tick = entity.tickCount + partialTick;
         float progress = Mth.clamp(tick / (float) VoidScytheBalance.WAVE_LIFETIME, 0.0F, 1.0F);
         float fade = 1.0F - progress * progress;
+        // 起飞阶段淡入，避免剑气在玩家眼前凭空出现。
+        float appear = Mth.clamp(tick / 2.5F, 0.0F, 1.0F);
+        float alphaScale = fade * appear;
+
+        // entityYaw 已经是 yRotO→yRot 的插值结果；俯仰角同样手动插值，
+        // 这样上下坡释放的剑气也会平滑跟随视线，而不是一帧一跳。
+        float pitch = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
 
         float width = (float) entity.getWaveWidth();
         float height = (float) entity.getWaveHeight();
-        float pulse = 1.0F + 0.035F * Mth.sin(tick * 0.9F);
+        float pulse = 1.0F + 0.04F * Mth.sin(tick * 0.85F);
+        float roll = 2.4F * Mth.sin(tick * 0.14F);
 
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE));
 
         poseStack.pushPose();
-        // 面向镜头，保证从发射者背后看也是一枚完整的月牙，而不是一条边。
-        poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        // 轻微摆动，避免完全静止的贴片感。
-        poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(tick * 0.18F) * 4.5F));
+        // 让刃面垂直于飞行方向：local +Z 指向剑气前进方向。
+        poseStack.mulPose(Axis.YP.rotationDegrees(-entityYaw));
+        poseStack.mulPose(Axis.XP.rotationDegrees(pitch));
+        // 轻微侧倾，像被甩出去的刃，而不是完全静止的贴片。
+        poseStack.mulPose(Axis.ZP.rotationDegrees(roll));
 
-        drawLayer(consumer, poseStack, width * 1.35F * pulse, height * 1.30F * pulse,
-                0.0F, 0.20F * fade, 125, 70, 255);
-        drawLayer(consumer, poseStack, width * pulse, height * pulse,
-                0.0F, 0.78F * fade, 180, 110, 255);
-        drawLayer(consumer, poseStack, width * 0.58F * pulse, height * 0.92F * pulse,
-                0.0F, 0.95F * fade, 238, 218, 255);
+        // 运动残影：沿飞行反方向留一层淡影。
+        drawLayer(consumer, poseStack, width * 0.82F, height * 0.80F, -0.55F,
+                0.18F * alphaScale, 150, 90, 255);
+        // 外层柔光：比主刃大一圈，负责辉光。
+        drawLayer(consumer, poseStack, width * 1.18F * pulse, height * 1.55F * pulse, -0.02F,
+                0.22F * alphaScale, 118, 64, 255);
+        // 主刃：横向宽、纵向薄。
+        drawLayer(consumer, poseStack, width * pulse, height * pulse, 0.0F,
+                0.90F * alphaScale, 190, 145, 255);
+        // 内层高光刃芯。
+        drawLayer(consumer, poseStack, width * 0.94F, height * 0.52F, 0.02F,
+                0.95F * alphaScale, 246, 240, 255);
 
         poseStack.popPose();
     }
@@ -76,6 +101,10 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
     private static void drawLayer(VertexConsumer consumer, PoseStack poseStack,
                                   float width, float height, float z,
                                   float alpha, int red, int green, int blue) {
+        if (alpha <= 0.005F) {
+            return;
+        }
+
         poseStack.pushPose();
         poseStack.translate(0.0F, 0.0F, z);
         poseStack.scale(width, height, 1.0F);
@@ -83,11 +112,12 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
         int a = Mth.clamp((int) (alpha * 255.0F), 0, 255);
         Matrix4f matrix = poseStack.last().pose();
 
-        // 面向 +Z 的四边形；缩放到 width/height 之后正好铺满月牙贴图。
-        vertex(consumer, matrix, -0.5F, -0.5F, 0.0F, red, green, blue, a, 0.0F, 1.0F);
-        vertex(consumer, matrix, 0.5F, -0.5F, 0.0F, red, green, blue, a, 1.0F, 1.0F);
-        vertex(consumer, matrix, 0.5F, 0.5F, 0.0F, red, green, blue, a, 1.0F, 0.0F);
-        vertex(consumer, matrix, -0.5F, 0.5F, 0.0F, red, green, blue, a, 0.0F, 0.0F);
+        // 面向 +Z 的四边形；只采样贴图里横向刃形所在的条带，
+        // 缩放到 width/height 之后刃身正好铺满，不会被透明留白压扁。
+        vertex(consumer, matrix, -0.5F, -0.5F, 0.0F, red, green, blue, a, U0, V1);
+        vertex(consumer, matrix, 0.5F, -0.5F, 0.0F, red, green, blue, a, U1, V1);
+        vertex(consumer, matrix, 0.5F, 0.5F, 0.0F, red, green, blue, a, U1, V0);
+        vertex(consumer, matrix, -0.5F, 0.5F, 0.0F, red, green, blue, a, U0, V0);
 
         poseStack.popPose();
     }

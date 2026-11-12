@@ -41,6 +41,9 @@ import java.util.UUID;
  * 能量斩击，而不是以玩家为中心扩散的扇形：</p>
  * <ul>
  *   <li>沿玩家视线飞行，速度 {@link VoidScytheBalance#WAVE_SPEED} 格/tick；</li>
+ *   <li><b>横向剑气</b>：刃面垂直于飞行方向、横向铺开，渲染时跟随实体朝向；</li>
+ *   <li><b>平滑运动</b>：起飞 4 tick 平滑加速、寿命最后 12 tick 平滑减速，
+ *       位置与朝向都交给客户端做 tick 间插值；</li>
  *   <li>持续 {@link VoidScytheBalance#WAVE_LIFETIME} tick（100 tick = 5 秒）；</li>
  *   <li>不碰撞方块，可以穿墙，直到寿命结束才消散；</li>
  *   <li>穿透生物：每个目标只结算一次，剑气命中后继续向前飞；</li>
@@ -130,21 +133,56 @@ public class ScytheWaveEntity extends Projectile {
         }
 
         Vec3 movement = this.getDeltaMovement();
-        if (movement.lengthSqr() < 1.0E-6D) {
-            // 极端情况下（被其它模组改了速度），按朝向继续飞，避免剑气原地不动。
-            movement = Vec3.directionFromRotation(this.getXRot(), this.getYRot())
-                    .scale(VoidScytheBalance.WAVE_SPEED);
-        }
+        Vec3 direction = movement.lengthSqr() < 1.0E-6D
+                // 极端情况下（被其它模组改了速度），按朝向继续飞，避免剑气原地不动。
+                ? Vec3.directionFromRotation(this.getXRot(), this.getYRot())
+                : movement.normalize();
+
+        // 平滑运动：起飞时从半速加速到全速，寿命末尾再平滑减速，
+        // 而不是凭空出现后一直匀速硬邦邦地平移。
+        double speed = VoidScytheBalance.WAVE_SPEED * speedScale(this.tickCount);
+        Vec3 velocity = direction.scale(speed);
+        this.setDeltaMovement(velocity);
 
         Vec3 from = this.position();
-        this.setPos(this.getX() + movement.x, this.getY() + movement.y, this.getZ() + movement.z);
-        this.setDeltaMovement(movement);
+        this.setPos(this.getX() + velocity.x, this.getY() + velocity.y, this.getZ() + velocity.z);
         Vec3 to = this.position();
 
-        // 让实体朝向与运动方向一致：客户端渲染和后续旋转都靠它。
-        ProjectileUtil.rotateTowardsMovement(this, 1.0F);
+        // 让实体朝向平滑跟随运动方向：客户端用 yRotO/xRotO 做插值，渲染不会跳帧。
+        ProjectileUtil.rotateTowardsMovement(this, 0.5F);
 
         this.damageTargets(from, to);
+    }
+
+    /**
+     * 剑气当前 tick 的速度倍率。
+     *
+     * <p>起飞 {@link VoidScytheBalance#WAVE_LAUNCH_TICKS} tick 内用 smoothstep
+     * 从 {@link VoidScytheBalance#WAVE_LAUNCH_SPEED} 升到 1.0；寿命最后
+     * {@link VoidScytheBalance#WAVE_DISSIPATE_TICKS} tick 再平滑降到
+     * {@link VoidScytheBalance#WAVE_END_SPEED}。</p>
+     */
+    private static double speedScale(int tick) {
+        double factor = 1.0D;
+
+        if (VoidScytheBalance.WAVE_LAUNCH_TICKS > 0) {
+            double launch = Mth.clamp((tick + 1.0D) / VoidScytheBalance.WAVE_LAUNCH_TICKS,
+                    0.0D, 1.0D);
+            launch = launch * launch * (3.0D - 2.0D * launch);
+            factor = VoidScytheBalance.WAVE_LAUNCH_SPEED
+                    + (1.0D - VoidScytheBalance.WAVE_LAUNCH_SPEED) * launch;
+        }
+
+        int remaining = VoidScytheBalance.WAVE_LIFETIME - tick;
+        if (remaining < VoidScytheBalance.WAVE_DISSIPATE_TICKS) {
+            double fade = Mth.clamp(remaining / (double) VoidScytheBalance.WAVE_DISSIPATE_TICKS,
+                    0.0D, 1.0D);
+            fade = fade * fade * (3.0D - 2.0D * fade);
+            factor *= VoidScytheBalance.WAVE_END_SPEED
+                    + (1.0D - VoidScytheBalance.WAVE_END_SPEED) * fade;
+        }
+
+        return factor;
     }
 
     private void damageTargets(Vec3 from, Vec3 to) {
@@ -210,30 +248,39 @@ public class ScytheWaveEntity extends Projectile {
     }
 
     /**
-     * 客户端拖尾：剑气所在平面不断洒出虚空火，形成一条连续的紫黑色尾迹。
+     * 客户端拖尾：沿着横向剑刃的整条刃线洒出虚空火，形成一条连续的紫黑色尾迹。
+     *
+     * <p>横向剑气不再是一个面向镜头的圆贴片，所以粒子要按实体朝向铺在
+     * “刀身”所在的横向线上，而不是随机铺一个方形。</p>
      */
     private void clientTrailParticles() {
+        float yaw = this.getYRot() * Mth.DEG_TO_RAD;
+        double dirX = -Mth.sin(yaw);
+        double dirZ = Mth.cos(yaw);
+        double rightX = Mth.cos(yaw);
+        double rightZ = Mth.sin(yaw);
         double width = this.getWaveWidth();
         double height = this.getWaveHeight();
-        int count = 3;
-        for (int i = 0; i < count; i++) {
-            double offsetX = (this.random.nextDouble() - 0.5D) * width;
-            double offsetY = (this.random.nextDouble() - 0.5D) * height;
-            double offsetZ = (this.random.nextDouble() - 0.5D) * 0.35D;
+
+        for (int i = 0; i < 4; i++) {
+            double lateral = (this.random.nextDouble() - 0.5D) * width * 0.95D;
+            double vertical = (this.random.nextDouble() - 0.5D) * height * 0.8D;
+            double back = 0.10D + this.random.nextDouble() * 0.55D;
             this.level().addParticle(ModParticles.VOID_FLAME.get(),
-                    this.getX() + offsetX,
-                    this.getY() + offsetY,
-                    this.getZ() + offsetZ,
-                    (this.random.nextDouble() - 0.5D) * 0.015D,
+                    this.getX() + rightX * lateral - dirX * back,
+                    this.getY() + vertical,
+                    this.getZ() + rightZ * lateral - dirZ * back,
+                    (this.random.nextDouble() - 0.5D) * 0.02D,
                     0.012D + this.random.nextDouble() * 0.02D,
-                    (this.random.nextDouble() - 0.5D) * 0.015D);
+                    (this.random.nextDouble() - 0.5D) * 0.02D);
         }
 
-        if (this.tickCount % 3 == 0) {
+        if (this.tickCount % 2 == 0) {
+            double lateral = (this.random.nextDouble() - 0.5D) * width * 0.75D;
             this.level().addParticle(ParticleTypes.REVERSE_PORTAL,
-                    this.getX() + (this.random.nextDouble() - 0.5D) * width,
-                    this.getY() + (this.random.nextDouble() - 0.5D) * height,
-                    this.getZ(),
+                    this.getX() + rightX * lateral - dirX * 0.5D,
+                    this.getY() + (this.random.nextDouble() - 0.5D) * height * 0.35D,
+                    this.getZ() + rightZ * lateral - dirZ * 0.5D,
                     0.0D, 0.01D, 0.0D);
         }
     }
@@ -242,10 +289,10 @@ public class ScytheWaveEntity extends Projectile {
         if (this.level() instanceof ServerLevel level) {
             level.sendParticles(ModParticles.VOID_FLAME.get(),
                     this.getX(), this.getY(), this.getZ(),
-                    36, this.getWaveWidth() * 0.45D, this.getWaveHeight() * 0.45D, 0.35D, 0.04D);
+                    40, this.getWaveWidth() * 0.35D, this.getWaveHeight() * 0.45D, 0.30D, 0.04D);
             level.sendParticles(ParticleTypes.REVERSE_PORTAL,
                     this.getX(), this.getY(), this.getZ(),
-                    24, this.getWaveWidth() * 0.4D, this.getWaveHeight() * 0.4D, 0.3D, 0.02D);
+                    24, this.getWaveWidth() * 0.35D, this.getWaveHeight() * 0.35D, 0.25D, 0.02D);
             level.playSound(null, this.getX(), this.getY(), this.getZ(),
                     SoundEvents.SOUL_ESCAPE, SoundSource.PLAYERS, 0.7F, 0.55F);
         }

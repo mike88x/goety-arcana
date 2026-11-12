@@ -3,6 +3,7 @@ package com.goetyarcana.effect;
 import com.goetyarcana.VoidScytheBalance;
 import com.goetyarcana.combat.CombatTier;
 import com.goetyarcana.entity.ExecutionSlashEntity;
+import com.goetyarcana.network.ModNetwork;
 import com.goetyarcana.registry.ModDamageTypes;
 import com.goetyarcana.registry.ModEffects;
 import com.goetyarcana.registry.ModParticles;
@@ -194,6 +195,12 @@ public class ExecutionEffect extends MobEffect {
                 target.hurt(executionDamage(serverLevel, owner), amount);
             }
             case NORMAL -> target.kill();
+        }
+
+        // 无论普通怪还是被打死的精英/Boss，只要确实死于这次处决，
+        // 就通知附近客户端播放专属的虚空湮灭死亡动画（替代原版侧倒）。
+        if (!target.isAlive()) {
+            ModNetwork.sendExecutionDeath(serverLevel, target);
         }
     }
 

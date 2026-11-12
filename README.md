@@ -49,16 +49,18 @@
 - 按住右键蓄力，松开释放。**最低 5 tick（0.25 秒）**可释放，**30 tick（1.5 秒）**蓄满。
 - **专属双手蓄力动作**：第三人称下双臂抬到胸前、左手向内夹住镰柄，身体微微前倾；蓄力越高收得越紧，并有轻微颤抖。动作平滑淡入淡出，不替换原版行走/潜行动画。第一人称下镰刀会随蓄力略微向身体中线收拢。
 - 蓄力过程有四档刀身模型（普通 → 微光 → 强光 → 满蓄发光）；粒子从外圈螺旋收束到胸口，满蓄时额外出现向外扩散的脉冲环。
-- 松开后沿准星方向生成一道 **向前飞行** 的月牙形剑气（`goetyarcana:scythe_wave`），像 Goety 死神之镰的剑气一样 **穿透生物**，并且 **不碰撞方块、可穿墙**，直到 5 秒寿命结束。
+- 松开后沿准星方向生成一道 **向前飞行的横向剑气**（`goetyarcana:scythe_wave`）：刃面垂直于飞行方向、横向铺开，贴图本身就是横向刃形（白紫刃芯 + 青色刃缘），不再当广告牌面向镜头。
+- **平滑运动**：起飞 4 tick 平滑加速、消散前 12 tick 平滑减速，位置与朝向都做 tick 间插值；出现时淡入、寿命末尾淡出，不会突兀闪现或一帧一跳。
+- 与死神之镰剑气一样 **穿透生物**，并且 **不碰撞方块、可穿墙**，直到 5 秒寿命结束。
 
 | 蓄力 | 剑气宽度 | 剑气高度 | 伤害 |
 | --- | --- | --- | --- |
-| 最低 | 2.4 格 | 2.2 格 | 目标最大生命值 × **5%** |
-| 50% | 4.2 格 | 3.6 格 | 目标最大生命值 × **10%** |
-| 满蓄 | **6 格** | **5 格** | 目标最大生命值 × **15%** |
+| 最低 | 3.0 格 | 1.6 格 | 目标最大生命值 × **5%** |
+| 50% | 5.0 格 | 2.3 格 | 目标最大生命值 × **10%** |
+| 满蓄 | **7 格** | **3 格** | 目标最大生命值 × **15%** |
 
 - **没有基础伤害**，只有目标最大生命值百分比；伤害类型 `goetyarcana:void_wave` 带 `bypasses_armor` / `bypasses_effects` / `bypasses_enchantments`，让百分比尽量精确，但 **不带** `bypasses_invulnerability`，所以不会绕过 Boss 的常规限伤。
-- 剑气速度 **1.0 格/tick**，寿命 **100 tick（5 秒）**；每个被扫到的目标只结算一次，命中后剑气继续向前飞，不会消失。
+- 剑气速度 **1.0 格/tick**（实际位移受起飞/消散曲线影响），寿命 **100 tick（5 秒）**；每个被扫到的目标只结算一次，命中后剑气继续向前飞，不会消失。
 - 命中判定使用“上一 tick 位置 + 当前 tick 位置”的扫掠 AABB，宽度/高度随蓄力提升；高速飞行也不会从目标身上“跳帧穿过”。
 - 剑气是纯能量，不破坏作物/草/花，也不会点燃方块。
 - 命中时同样有 **5%** 概率施加处决；每个目标命中会爆出一团虚空火。
@@ -78,6 +80,7 @@
 - 精英/Boss 伤害使用 `goetyarcana:execution`，同时登记进 `bypasses_armor` / `bypasses_effects` / `bypasses_enchantments` 与 `bypasses_invulnerability`，因此可以绕过 Goety 的 Boss 伤害上限和常规减伤。
 - 普通怪使用 `kill()` 直接消灭，不会被各种减伤/限伤救回来；处决动画在结算前播放，结算后动画还会继续淡出。
 - 处决来源会记录施加者 UUID，Boss/精英结算时尽量把伤害归给该玩家。
+- 处决致死的怪物会播放专属「虚空湮灭」死亡动画（20 tick）：身体被虚空抬起、旋转、压扁并沉入地面，由客户端 `ExecutionDeathAnimation` 接管渲染。
 - 判定顺序：实体类型标签 `goetyarcana:bosses` / `goetyarcana:elites` → 原版 Boss → Goety `common.entities.boss` 包 → 最大生命值兜底（≥200 Boss，≥60 精英）。
 - 整合包可以通过数据包给其它模组的 Boss/精英加标签，或给实体加 `goetyarcana:elite` scoreboard tag / `goetyarcana:elite=true` persistent data。
 
@@ -97,7 +100,8 @@
 
 - **虚空镰刀**：介绍、末地仪式配方、虚空之蚀/处决说明；
 - **裂魂聚晶**：介绍与末地仪式配方（从 Goety 虚空聚晶分类移入本分类）；
-- **虚空弩（规划中）**：仅设计文本，尚未实装。
+- **虚空弩（规划中）**：仅设计文本，尚未实装；
+- **虚空爆破聚晶 / 藤蔓缠绕聚晶 / 虚空护身符（规划中）**：仅占位文本，尚未实装。
 
 分类/条目位于 `assets/goety/patchouli_books/black_book/{en_us,zh_cn}/...`。
 
@@ -113,15 +117,27 @@
 
 ---
 
-## 二、虚空弩（规划中，仅文本）
+## 二、规划中的内容（仅文本，占位）
 
-**虚空弩 (Void Crossbow)** 目前只有设定文本，没有物品、模型、配方或实际机制：
+以下内容目前只有设定文本，没有物品、模型、配方或实际机制，已写入《黑暗秘典》的「诡厄奥术」分类，作为后续更新占位。
+
+### 虚空弩 (Void Crossbow)
 
 - 定位：远程虚空武器，发射充能虚空弩矢；
 - 命中后短暂留下虚空裂隙，对经过的敌人施加虚空之蚀；
 - 蓄力/装填与灵魂能量的具体数值待定。
 
-该内容已写入《黑暗秘典》的「诡厄奥术」分类，作为后续开发占位。
+### 虚空爆破聚晶 (Void Blast Focus)
+
+- 召唤虚空苦力怕仆从，右键清除。
+
+### 藤蔓缠绕聚晶 (Vine Entangle Focus)
+
+- 发射种子，随后对 3×3 范围内怪物的脚下召唤藤蔓，拖住它们的行动。
+
+### 虚空护身符 (Void Amulet)
+
+- 暂不写介绍，仅保留名称占位。
 
 ---
 
@@ -156,7 +172,9 @@ goety-soulburst/                     # 目录名保留旧名，工程内容已�
 ├─ docs/
 │  ├─ void_scythe_preview.png         # 虚空镰刀（常态 / 满蓄）
 │  ├─ soul_burst_focus_preview.png
-│  └─ soul_burst_projectile_preview.png
+│  ├─ soul_burst_projectile_preview.png
+│  ├─ GoetyArcana-1.9.6-项目整理.md   # 项目整理文档
+│  └─ GoetyArcana-1.9.6-项目整理.docx # Word 版
 └─ src/main/
    ├─ java/com/goetyarcana/
    │  ├─ GoetyArcanaMod.java          # 模组入口（mod id: goetyarcana）
@@ -192,7 +210,8 @@ goety-soulburst/                     # 目录名保留旧名，工程内容已�
    │     ├─ VoidScytheClientEvents.java # 平滑环绕/蓄力粒子
    │     ├─ VoidFlameParticle.java    # 自制虚空火粒子
    │     ├─ ExecutionSlashRenderer.java # 处决巨型镰刀动画
-   │     └─ ScytheWaveRenderer.java   # 剑气月牙渲染
+   │     ├─ ExecutionDeathAnimation.java # 处决死亡「虚空湮灭」动画
+   │     └─ ScytheWaveRenderer.java   # 横向剑气渲染
    └─ resources/
       ├─ META-INF/mods.toml
       ├─ goetyarcana.mixins.json      # 客户端 Mixin 配置
@@ -213,7 +232,7 @@ goety-soulburst/                     # 目录名保留旧名，工程内容已�
 ## 五、怎么构建
 
 ```bash
-gradle build      # 产物 build/libs/goetyarcana-1.9.6.jar
+gradle build      # 产物 build/libs/goetyarcana-1.9.7.jar
 ```
 
 需要 JDK 17；Goety 版本在 `gradle.properties` 的 `goety_version`（默认 `2.5.60.6`）。
@@ -235,14 +254,17 @@ gradle build      # 产物 build/libs/goetyarcana-1.9.6.jar
 | `EXECUTION_CHANCE` | 处决概率 | 0.05F |
 | `EXECUTION_TICKS` | 处决 debuff 时长 | 100 tick |
 | `EXECUTION_ANIMATION_TICKS` | 处决动画蓄势/延迟结算 | 12 tick |
+| `EXECUTION_DEATH_TICKS` | 处决致死后的死亡动画时长 | 20 tick |
 | `EXECUTION_ELITE_PERCENT` | 精英处决伤害 | 0.10F |
 | `EXECUTION_BOSS_PERCENT` | Boss 处决伤害 | 0.20F |
 | `MIN_CHARGE_TICKS` | 最短可释放蓄力 | 5 tick |
 | `FULL_CHARGE_TICKS` | 蓄满时间 | 30 tick |
 | `WAVE_LIFETIME` | 剑气寿命 | 100 tick（5 秒） |
 | `WAVE_SPEED` | 剑气速度 | 1.0 格/tick |
-| `WAVE_MIN_WIDTH` / `WAVE_MAX_WIDTH` | 剑气宽度 | 2.4 / 6 格 |
-| `WAVE_MIN_HEIGHT` / `WAVE_MAX_HEIGHT` | 剑气高度 | 2.2 / 5 格 |
+| `WAVE_MIN_WIDTH` / `WAVE_MAX_WIDTH` | 剑气宽度 | 3 / 7 格 |
+| `WAVE_MIN_HEIGHT` / `WAVE_MAX_HEIGHT` | 剑气高度 | 1.6 / 3 格 |
+| `WAVE_LAUNCH_TICKS` / `WAVE_DISSIPATE_TICKS` | 起飞加速 / 末尾减速 | 4 / 12 tick |
+| `WAVE_LAUNCH_SPEED` / `WAVE_END_SPEED` | 起飞 / 消散速度倍率 | 0.5 / 0.75 |
 | `WAVE_MIN_PERCENT` / `WAVE_MAX_PERCENT` | 剑气百分比 | 5% / 15% |
 | `WAVE_HIT_DEPTH` | 剑气扫掠判定厚度 | 1.25 格 |
 | `WAVE_COOLDOWN_TICKS` | 剑气冷却 | 25 tick |
@@ -270,9 +292,9 @@ gradle build      # 产物 build/libs/goetyarcana-1.9.6.jar
 1. **360° 近战**：`ScytheEvents` 取消 `AttackEntityEvent` / `LeftClickBlock`，由 `ScytheCombat` 对 AABB 内所有合法目标逐个 `hurt`；空挥由 `ModNetwork` 发包到服务端。
 2. **专属动作**：`HumanoidModelMixin` 注入 `HumanoidModel#setupAnim` 末尾叠加手臂/躯干旋转（玩家模型的 `super.setupAnim` 之后会自动复制袖子/外套，避免覆盖层错位）；左键读取 `getAttackAnim()` 做横扫，右键读取 `getTicksUsingItem()` 做双手蓄力。第一人称由 `VoidScytheClientEvents#onRenderHand` 提供小幅横向甩动/收拢。Mixin 配置在 `goetyarcana.mixins.json`，生产环境用 `goetyarcana.refmap.json` 映射到 SRG。
 3. **蓄力**：`VoidScytheItem#use` 开始使用，`releaseUsing` 按使用 tick 计算 charge；沿玩家视线生成 `ScytheWaveEntity`。
-4. **穿透剑气**：`ScytheWaveEntity` 每 tick 沿速度方向前进，`noPhysics` 保证穿墙；命中盒取“上一 tick 位置 + 当前 tick 位置”的并集，用 `Set<UUID>` 保证每个目标只结算一次，命中后不消失。
+4. **横向穿透剑气**：`ScytheWaveEntity` 每 tick 沿速度方向前进，并用 smoothstep 曲线在起飞/消散阶段平滑加减速，`noPhysics` 保证穿墙；渲染按实体朝向把横向刃面转到垂直飞行方向，命中盒取“上一 tick 位置 + 当前 tick 位置”的并集，用 `Set<UUID>` 保证每个目标只结算一次，命中后不消失。
 5. **百分比伤害**：剑气伤害 = `目标最大生命值 × Mth.lerp(charge, 5%, 15%)`，没有固定值；`void_wave` 只带 `bypasses_armor`。
-6. **处决**：`ExecutionEffect` 在 effect 最后一 tick 结算；普通怪 `kill()`，精英/Boss 用带 `bypasses_invulnerability` 的 `execution` 伤害类型。
+6. **处决**：`ExecutionEffect` 在 effect 最后一 tick 结算；普通怪 `kill()`，精英/Boss 用带 `bypasses_invulnerability` 的 `execution` 伤害类型；结算致死时向 96 格内客户端发送 `ExecutionDeathPacket`，由 `ExecutionDeathAnimation` 接管 20 tick 的「虚空湮灭」死亡动画。
 7. **模型/动画**：以死神之镰的 32×32 轮廓为底，使用 `goety:item/scythe` 模型父级；四档刀身贴图 + `layer1/layer2` 的 16 帧插值光环。`charge` predicate 在四个阈值切换模型，实现蓄力变亮。
 8. **自制虚空火**：`ModParticles` 注册 `goetyarcana:void_flame`，`VoidFlameParticle` + 4 帧自制贴图；替代原版灵魂火，用于环绕、蓄力、剑气拖尾和命中爆发。
 9. **创造页**：`ModCreativeTabs` 注册 `goetyarcana:main`，`displayItems` 显式加入全部本模组物品。
@@ -288,6 +310,12 @@ gradle build      # 产物 build/libs/goetyarcana-1.9.6.jar
 - 工程目录名为 `goety-soulburst` 是历史遗留，mod id 是 `goetyarcana`。
 
 ## 九、更新记录
+
+**1.9.7**
+- 剑气改为 **横向刃面**（垂直于飞行方向铺开），只采样贴图里刃形所在的条带，避免透明留白把刃身压扁；
+- 剑气加入 **平滑运动**：起飞 4 tick 加速、消散前 12 tick 减速，位置/朝向做 tick 间插值，出现淡入、末尾淡出；
+- 被处决 debuff 致死的怪物新增 **专属死亡动画**（20 tick 虚空湮灭：抬起、旋转、压扁、沉入地面）；
+- 《黑暗秘典》与 README 新增 **虚空爆破聚晶**、**藤蔓缠绕聚晶**、**虚空护身符** 的占位文本。
 
 **1.9.6**
 - 左键横扫粒子统一为自制虚空火双层环，移除原版 SWEEP_ATTACK；

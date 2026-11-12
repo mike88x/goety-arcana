@@ -1,0 +1,12 @@
+{
+  "name": "虚空爆破聚晶（规划中）",
+  "icon": "minecraft:creeper_head",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "虚空爆破聚晶",
+      "text": "Goety Arcana 的规划聚晶：召唤一只虚空苦力怕仆从，再次右键即可将其清除。目前仅为设计文本，物品、模型、配方与实际机制尚未实装。"
+    }
+  ]
+}

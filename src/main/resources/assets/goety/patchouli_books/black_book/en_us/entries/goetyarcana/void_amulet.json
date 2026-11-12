@@ -1,0 +1,12 @@
+{
+  "name": "Void Amulet (Planned)",
+  "icon": "minecraft:echo_shard",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Void Amulet",
+      "text": "Not implemented yet. This page exists only as a placeholder."
+    }
+  ]
+}
