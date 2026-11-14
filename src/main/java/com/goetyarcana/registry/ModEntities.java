@@ -4,6 +4,8 @@ import com.goetyarcana.GoetyArcanaMod;
 import com.goetyarcana.entity.ExecutionSlashEntity;
 import com.goetyarcana.entity.ScytheWaveEntity;
 import com.goetyarcana.entity.SoulBurstEntity;
+import com.goetyarcana.entity.VoidBoltEntity;
+import com.goetyarcana.entity.VoidExplosionEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -35,6 +37,24 @@ public final class ModEntities {
                     .updateInterval(1)
                     .build(GoetyArcanaMod.MOD_ID + ":scythe_wave"));
 
+    /** 虚空弩矢 */
+    public static final RegistryObject<EntityType<VoidBoltEntity>> VOID_BOLT =
+            ENTITY_TYPES.register("void_bolt", () -> EntityType.Builder
+                    .<VoidBoltEntity>of(VoidBoltEntity::new, MobCategory.MISC)
+                    .sized(0.3F, 0.3F)
+                    .clientTrackingRange(8)
+                    .updateInterval(1)
+                    .build(GoetyArcanaMod.MOD_ID + ":void_bolt"));
+
+    /** 虚空爆炸表现动画 */
+    public static final RegistryObject<EntityType<VoidExplosionEntity>> VOID_EXPLOSION =
+            ENTITY_TYPES.register("void_explosion", () -> EntityType.Builder
+                    .<VoidExplosionEntity>of(VoidExplosionEntity::new, MobCategory.MISC)
+                    .sized(0.2F, 0.2F)
+                    .clientTrackingRange(16)
+                    .updateInterval(1)
+                    .build(GoetyArcanaMod.MOD_ID + ":void_explosion"));
+
     /** 处决 debuff 结束时的专属斩击动画 */
     public static final RegistryObject<EntityType<ExecutionSlashEntity>> EXECUTION_SLASH =
             ENTITY_TYPES.register("execution_slash", () -> EntityType.Builder
@@ -51,3 +71,5 @@ public final class ModEntities {
         ENTITY_TYPES.register(modBus);
     }
 }
+
+

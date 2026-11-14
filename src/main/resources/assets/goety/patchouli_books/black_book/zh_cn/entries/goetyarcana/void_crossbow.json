@@ -1,12 +1,34 @@
 {
-  "name": "虚空弩（规划中）",
-  "icon": "minecraft:crossbow",
+  "name": "虚空弩",
+  "icon": "goetyarcana:void_crossbow",
   "category": "goety:goetyarcana",
   "pages": [
     {
       "type": "patchouli:text",
       "title": "虚空弩",
-      "text": "Goety Arcana 的规划武器：发射充能虚空弩矢，命中后短暂留下虚空裂隙。目前仅为设计文本，物品、模型、配方和实际机制都还没有实装。"
+      "text": "把虚空的饥渴装进弩身的双手弩。命中会累积「虚空之眼」：每层缩短装填时间、提高弩矢初速，最多 3 层；换下弩立刻消散。弹药优先使用虚空弩矢，没有弩矢时也能打普通箭。"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_crossbow"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "虚空之眼",
+      "text": "3 层时命中的弩矢会附加流血。带层数时头顶会冒虚空紫火，层数越高火越旺。装备虚空长袍（Curios 饰品）后，弩矢会自动追踪敌人并最多穿透 6 个目标，到达上限时当场爆炸。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "goetyarcana:void_crossbow_bolt"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "虚空弩矢",
+      "text": "命中生物会给目标挂上 4 秒的虚空爆炸，到期在目标身上炸开；插在方块上则在 4 秒后自行爆炸。爆炸伤害 10 点，按距离衰减到三成。"
     }
-  ]
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_crossbow": 1,
+    "goetyarcana:void_crossbow_bolt": 3
+  }
 }

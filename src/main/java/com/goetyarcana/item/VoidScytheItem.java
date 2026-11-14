@@ -26,6 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.UUID;
 
 /**
@@ -39,6 +40,7 @@ import java.util.UUID;
  * 半径（6→12 格）和百分比伤害（5%→15%）都越高。</p>
  */
 public class VoidScytheItem extends SwordItem {
+
 
     /** 与 4.5 格 360° 横扫匹配：玩家默认实体交互距离 3 格，额外 +1 格。 */
     private static final UUID REACH_MODIFIER_UUID =
@@ -154,3 +156,10 @@ public class VoidScytheItem extends SwordItem {
                 .withStyle(ChatFormatting.DARK_GRAY));
     }
 }
+
+
+
+
+
+
+

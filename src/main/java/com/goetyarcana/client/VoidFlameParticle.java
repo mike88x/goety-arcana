@@ -27,13 +27,13 @@ public class VoidFlameParticle extends TextureSheetParticle {
     private final SpriteSet sprites;
     private final float baseSize;
 
-    // 颜色从亮紫白过渡到深紫蓝。
-    private static final float START_R = 0.82F;
-    private static final float START_G = 0.62F;
-    private static final float START_B = 1.00F;
-    private static final float END_R = 0.32F;
-    private static final float END_G = 0.10F;
-    private static final float END_B = 0.78F;
+    // 颜色从亮紫过渡到深紫蓝。
+    private static final float START_R = 0.70F;
+    private static final float START_G = 0.45F;
+    private static final float START_B = 0.95F;
+    private static final float END_R = 0.26F;
+    private static final float END_G = 0.07F;
+    private static final float END_B = 0.62F;
 
     protected VoidFlameParticle(ClientLevel level, double x, double y, double z,
                                 double vx, double vy, double vz,
@@ -43,7 +43,7 @@ public class VoidFlameParticle extends TextureSheetParticle {
         this.xd = vx;
         this.yd = vy;
         this.zd = vz;
-        this.baseSize = 0.075F + random.nextFloat() * 0.075F;
+        this.baseSize = 0.045F + random.nextFloat() * 0.045F;
         this.quadSize = this.baseSize;
         this.lifetime = 18 + random.nextInt(14);
         this.gravity = 0.0F;
@@ -76,7 +76,7 @@ public class VoidFlameParticle extends TextureSheetParticle {
         // 出现时快速淡入，最后 45% 淡出。
         float fadeIn = Mth.clamp(t / 0.12F, 0.0F, 1.0F);
         float fadeOut = Mth.clamp((1.0F - t) / 0.45F, 0.0F, 1.0F);
-        this.alpha = 0.85F * fadeIn * fadeOut;
+        this.alpha = 0.68F * fadeIn * fadeOut;
 
         // 前 25% 稍微膨胀，之后缓慢收缩。
         if (t < 0.25F) {
@@ -121,3 +121,5 @@ public class VoidFlameParticle extends TextureSheetParticle {
         }
     }
 }
+
+

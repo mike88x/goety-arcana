@@ -4,7 +4,7 @@
   "death.attack.soulBurst": "%1$s 被虚空吞没",
   "death.attack.soulBurst.player": "%1$s 被 %2$s 的灵魂弹吞没",
   "itemGroup.goetyarcana": "诡厄奥术",
-  "item.goetyarcana.void_scythe": "虚空镰刀",
+  "item.goetyarcana.void_scythe": "虚空镰刀（WIP）",
   "item.goetyarcana.void_scythe.stats": "13 攻击伤害 · 0.9 攻击速度 · 360° 横扫",
   "item.goetyarcana.void_scythe.charge": "按住右键双手蓄力，松开释放穿透剑气（持续 5 秒，可穿墙）",
   "item.goetyarcana.void_scythe.effects": "命中：70% 虚空之蚀 I / 30% 虚空之蚀 II；5% 处决",
@@ -15,5 +15,18 @@
   "death.attack.voidWave": "%1$s 被虚空剑气撕碎",
   "death.attack.voidWave.player": "%1$s 被 %2$s 的虚空剑气撕碎",
   "death.attack.execution": "%1$s 被处决",
-  "death.attack.execution.player": "%1$s 被 %2$s 处决"
+  "death.attack.execution.player": "%1$s 被 %2$s 处决",
+  "effect.goetyarcana.void_eye": "虚空之眼",
+  "effect.goetyarcana.void_eye.description": "每层提升 20% 装填速度与箭速，最多 3 层；切换武器后消失。",
+  "effect.goetyarcana.bleed": "流血",
+  "effect.goetyarcana.bleed.description": "每秒失去 2 点生命，持续 6 秒。",
+  "item.goetyarcana.void_crossbow": "虚空弩",
+  "item.goetyarcana.void_crossbow.info": "命中获得虚空之眼：每层装填与箭速 +20%，最多 3 层；3 层时箭矢附加流血。弹药优先使用虚空弩矢，没有弩矢时可用普通箭。",
+  "item.goetyarcana.void_crossbow.robe": "装备虚空长袍：弩矢自动追踪，最多穿透 6 名敌人，达到上限时当场爆炸。",
+  "item.goetyarcana.void_crossbow.recipe": "末地仪式合成：原版弩 + 虚空之眼 ×2 + 虚空块 ×2",
+  "item.goetyarcana.void_crossbow_bolt": "虚空弩矢",
+  "item.goetyarcana.void_crossbow_bolt.info": "虚空弩专用弹药；命中或未命中都会在 4 秒后爆炸。",
+  "item.goetyarcana.void_scythe.wip": "模型目前处于 WIP，后续可能会修正。",
+  "effect.goetyarcana.void_explosion": "虚空爆炸",
+  "effect.goetyarcana.void_explosion.description": "4 秒后以携带者为中心引发虚空爆炸。"
 }

@@ -188,7 +188,7 @@ public final class VoidScytheClientEvents {
 
             if (tick % 3 == 0) {
                 double eyeY = player.getY() + Math.min(1.45D, player.getEyeHeight() * 0.85D);
-                level.addParticle(ParticleTypes.REVERSE_PORTAL,
+                level.addParticle(ModParticles.VOID_FLAME.get(),
                         player.getX() + (level.random.nextDouble() - 0.5D) * 0.7D,
                         eyeY + (level.random.nextDouble() - 0.5D) * 0.45D,
                         player.getZ() + (level.random.nextDouble() - 0.5D) * 0.7D,
@@ -210,3 +210,6 @@ public final class VoidScytheClientEvents {
     private VoidScytheClientEvents() {
     }
 }
+
+
+

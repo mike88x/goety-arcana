@@ -26,6 +26,8 @@ public final class ModCreativeTabs {
                     .icon(() -> new ItemStack(ModItems.VOID_SCYTHE.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.VOID_SCYTHE.get());
+                        output.accept(ModItems.VOID_CROSSBOW.get());
+                        output.accept(ModItems.VOID_CROSSBOW_BOLT.get());
                         output.accept(ModItems.SOUL_BURST_FOCUS.get());
                     })
                     .build());
@@ -37,3 +39,5 @@ public final class ModCreativeTabs {
         CREATIVE_TABS.register(modBus);
     }
 }
+
+

@@ -1,0 +1,27 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_void_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "goety:void_bottle"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_void_bottle"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "goetyarcana:void_crossbow_bolt"
+    ]
+  }
+}

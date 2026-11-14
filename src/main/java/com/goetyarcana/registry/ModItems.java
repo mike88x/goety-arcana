@@ -2,6 +2,8 @@ package com.goetyarcana.registry;
 
 import com.goetyarcana.GoetyArcanaMod;
 import com.goetyarcana.item.SoulBurstFocus;
+import com.goetyarcana.item.VoidBoltItem;
+import com.goetyarcana.item.VoidCrossbowItem;
 import com.goetyarcana.item.VoidScytheItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,6 +24,14 @@ public final class ModItems {
     public static final RegistryObject<Item> VOID_SCYTHE =
             ITEMS.register("void_scythe", VoidScytheItem::new);
 
+    /** 虚空之眼弩 */
+    public static final RegistryObject<Item> VOID_CROSSBOW =
+            ITEMS.register("void_crossbow", VoidCrossbowItem::new);
+
+    /** 虚空弩矢 */
+    public static final RegistryObject<Item> VOID_CROSSBOW_BOLT =
+            ITEMS.register("void_crossbow_bolt", VoidBoltItem::new);
+
     private ModItems() {
     }
 
@@ -29,3 +39,5 @@ public final class ModItems {
         ITEMS.register(modBus);
     }
 }
+
+

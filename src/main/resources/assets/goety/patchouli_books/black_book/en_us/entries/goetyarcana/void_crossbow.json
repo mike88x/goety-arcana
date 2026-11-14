@@ -1,12 +1,34 @@
 {
-  "name": "Void Crossbow (Planned)",
-  "icon": "minecraft:crossbow",
+  "name": "Void Crossbow",
+  "icon": "goetyarcana:void_crossbow",
   "category": "goety:goetyarcana",
   "pages": [
     {
       "type": "patchouli:text",
       "title": "Void Crossbow",
-      "text": "A planned Goety Arcana weapon. It would fire void-charged bolts that leave a short-lived rift on impact. This page is currently a design note only; the item, model, recipe and mechanics are not implemented yet."
+      "text": "A two-handed crossbow that loads the void's hunger into its stock. Hits build Void Eye: each stack shortens the reload and raises bolt velocity, up to 3 stacks; switching away drops them. It prefers Void Bolts but can fire plain arrows when out."
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_crossbow"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Void Eye",
+      "text": "At 3 stacks, bolts apply Bleed. While stacked, void fire burns above your head, growing with the stack count. Wearing the Void Robe (a Curios charm) makes bolts home in on enemies, pierce up to 6 targets, then detonate at the cap."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "goetyarcana:void_crossbow_bolt"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Void Bolt",
+      "text": "A bolt that hits a creature marks it with a 4 second Void Explosion that erupts where the target stands; bolts stuck in blocks detonate after 4 seconds on their own. The blast deals 10 damage, falling off to 30 percent with distance."
     }
-  ]
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_crossbow": 1,
+    "goetyarcana:void_crossbow_bolt": 3
+  }
 }

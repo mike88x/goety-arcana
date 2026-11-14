@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import com.goetyarcana.GoetyArcanaMod;
 import com.goetyarcana.VoidScytheBalance;
 import com.goetyarcana.entity.ScytheWaveEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -45,6 +46,10 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
     private static final float V0 = 40.0F / 128.0F;
     private static final float V1 = 96.0F / 128.0F;
 
+    /** 剑气贴图是 128×1024 的 8 帧条带；实体贴图不经过图集动画，手动选帧。 */
+    private static final int WAVE_FRAMES = 8;
+    private static final int WAVE_FRAME_TICKS = 2;
+
     public ScytheWaveRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
@@ -63,6 +68,11 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
         // 起飞阶段淡入，避免剑气在玩家眼前凭空出现。
         float appear = Mth.clamp(tick / 2.5F, 0.0F, 1.0F);
         float alphaScale = fade * appear;
+        double distance = entity.position().distanceTo(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition());
+        alphaScale *= Mth.clamp((float) ((distance - 1.0D) / 2.0D), 0.0F, 1.0F);
+        if (alphaScale <= 0.005F) {
+            return;
+        }
 
         // entityYaw 已经是 yRotO→yRot 的插值结果；俯仰角同样手动插值，
         // 这样上下坡释放的剑气也会平滑跟随视线，而不是一帧一跳。
@@ -72,6 +82,11 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
         float height = (float) entity.getWaveHeight();
         float pulse = 1.0F + 0.04F * Mth.sin(tick * 0.85F);
         float roll = 2.4F * Mth.sin(tick * 0.14F);
+
+        // 手动取帧：把整张 8 帧条带的 V 坐标缩到当前帧内。
+        int frame = Mth.floor(tick / WAVE_FRAME_TICKS) % WAVE_FRAMES;
+        float frameV0 = (frame + V0) / WAVE_FRAMES;
+        float frameV1 = (frame + V1) / WAVE_FRAMES;
 
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE));
 
@@ -84,23 +99,24 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
 
         // 运动残影：沿飞行反方向留一层淡影。
         drawLayer(consumer, poseStack, width * 0.82F, height * 0.80F, -0.55F,
-                0.18F * alphaScale, 150, 90, 255);
+                0.18F * alphaScale, 150, 90, 255, frameV0, frameV1);
         // 外层柔光：比主刃大一圈，负责辉光。
         drawLayer(consumer, poseStack, width * 1.18F * pulse, height * 1.55F * pulse, -0.02F,
-                0.22F * alphaScale, 118, 64, 255);
+                0.22F * alphaScale, 118, 64, 255, frameV0, frameV1);
         // 主刃：横向宽、纵向薄。
         drawLayer(consumer, poseStack, width * pulse, height * pulse, 0.0F,
-                0.90F * alphaScale, 190, 145, 255);
+                0.90F * alphaScale, 190, 145, 255, frameV0, frameV1);
         // 内层高光刃芯。
         drawLayer(consumer, poseStack, width * 0.94F, height * 0.52F, 0.02F,
-                0.95F * alphaScale, 246, 240, 255);
+                0.95F * alphaScale, 246, 240, 255, frameV0, frameV1);
 
         poseStack.popPose();
     }
 
     private static void drawLayer(VertexConsumer consumer, PoseStack poseStack,
                                   float width, float height, float z,
-                                  float alpha, int red, int green, int blue) {
+                                  float alpha, int red, int green, int blue,
+                                  float frameV0, float frameV1) {
         if (alpha <= 0.005F) {
             return;
         }
@@ -112,12 +128,11 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
         int a = Mth.clamp((int) (alpha * 255.0F), 0, 255);
         Matrix4f matrix = poseStack.last().pose();
 
-        // 面向 +Z 的四边形；只采样贴图里横向刃形所在的条带，
-        // 缩放到 width/height 之后刃身正好铺满，不会被透明留白压扁。
-        vertex(consumer, matrix, -0.5F, -0.5F, 0.0F, red, green, blue, a, U0, V1);
-        vertex(consumer, matrix, 0.5F, -0.5F, 0.0F, red, green, blue, a, U1, V1);
-        vertex(consumer, matrix, 0.5F, 0.5F, 0.0F, red, green, blue, a, U1, V0);
-        vertex(consumer, matrix, -0.5F, 0.5F, 0.0F, red, green, blue, a, U0, V0);
+        // 面向 +Z 的四边形；只采样当前帧里横向刃形所在的条带。
+        vertex(consumer, matrix, -0.5F, -0.5F, 0.0F, red, green, blue, a, U0, frameV1);
+        vertex(consumer, matrix, 0.5F, -0.5F, 0.0F, red, green, blue, a, U1, frameV1);
+        vertex(consumer, matrix, 0.5F, 0.5F, 0.0F, red, green, blue, a, U1, frameV0);
+        vertex(consumer, matrix, -0.5F, 0.5F, 0.0F, red, green, blue, a, U0, frameV0);
 
         poseStack.popPose();
     }
@@ -135,3 +150,4 @@ public class ScytheWaveRenderer extends EntityRenderer<ScytheWaveEntity> {
                 .endVertex();
     }
 }
+

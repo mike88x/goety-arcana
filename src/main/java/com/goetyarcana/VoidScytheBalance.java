@@ -103,7 +103,7 @@ public final class VoidScytheBalance {
     public static final double WAVE_SPEED = 1.0D;
 
     /** 剑气生成点沿视线前移的距离（格），避免贴脸时看不见。 */
-    public static final double WAVE_SPAWN_OFFSET = 1.0D;
+    public static final double WAVE_SPAWN_OFFSET = 2.5D;
 
     /**
      * 最低蓄力的剑气宽度（格，横向）。
@@ -150,3 +150,4 @@ public final class VoidScytheBalance {
     private VoidScytheBalance() {
     }
 }
+

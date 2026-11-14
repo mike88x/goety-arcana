@@ -4,7 +4,7 @@
   "death.attack.soulBurst": "%1$s was swallowed by the void",
   "death.attack.soulBurst.player": "%1$s was swallowed by %2$s's soul burst",
   "itemGroup.goetyarcana": "Goety Arcana",
-  "item.goetyarcana.void_scythe": "Void Scythe",
+  "item.goetyarcana.void_scythe": "Void Scythe (WIP)",
   "item.goetyarcana.void_scythe.stats": "13 attack damage · 0.9 attack speed · 360° sweep",
   "item.goetyarcana.void_scythe.charge": "Hold right-click to charge with both hands; release a piercing scythe wave (5s, passes through walls)",
   "item.goetyarcana.void_scythe.effects": "On hit: 70% Void Touched I / 30% Void Touched II; 5% Execution",
@@ -15,5 +15,18 @@
   "death.attack.voidWave": "%1$s was torn apart by a void scythe wave",
   "death.attack.voidWave.player": "%1$s was torn apart by %2$s's void scythe wave",
   "death.attack.execution": "%1$s was executed",
-  "death.attack.execution.player": "%1$s was executed by %2$s"
+  "death.attack.execution.player": "%1$s was executed by %2$s",
+  "effect.goetyarcana.void_eye": "Void Eye",
+  "effect.goetyarcana.void_eye.description": "+20% reload speed and arrow velocity per stack, up to 3 stacks. Removed when switching weapons.",
+  "effect.goetyarcana.bleed": "Bleed",
+  "effect.goetyarcana.bleed.description": "Lose 2 HP per second for 6 seconds.",
+  "item.goetyarcana.void_crossbow": "Void Crossbow",
+  "item.goetyarcana.void_crossbow.info": "Hits grant Void Eye: +20% reload speed and arrow velocity per stack, up to 3. At 3 stacks arrows apply Bleed. Prefers Void Bolts; plain arrows work as a fallback.",
+  "item.goetyarcana.void_crossbow.robe": "With a Void Robe: bolts home in on enemies, pierce up to 6 targets, then detonate at the cap.",
+  "item.goetyarcana.void_crossbow.recipe": "End Ritual: vanilla crossbow + 2 Void Eyes + 2 Void Blocks",
+  "item.goetyarcana.void_crossbow_bolt": "Void Bolt",
+  "item.goetyarcana.void_crossbow_bolt.info": "Void Crossbow ammunition; explodes after 4 seconds whether it hits or not.",
+  "item.goetyarcana.void_scythe.wip": "The model is currently WIP and may be revised later.",
+  "effect.goetyarcana.void_explosion": "Void Explosion",
+  "effect.goetyarcana.void_explosion.description": "Explodes around the carrier after 4 seconds."
 }
