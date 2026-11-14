@@ -6,7 +6,7 @@
   },
   "craftType": "end",
   "soulCost": 10,
-  "duration": 30,
+  "duration": 5,
   "ingredients": [
     {
       "item": "goety:void_eye"
