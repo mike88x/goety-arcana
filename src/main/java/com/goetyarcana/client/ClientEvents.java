@@ -45,6 +45,7 @@ public final class ClientEvents {
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.VOID_FLAME.get(), VoidFlameParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.BLOOD_DRIP.get(), BloodDripParticle.Provider::new);
     }
 
     @SubscribeEvent

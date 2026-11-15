@@ -156,12 +156,8 @@ public class VoidCrossbowItem extends CrossbowItem {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(Component.translatable("item.goetyarcana.void_crossbow.info")
+        tooltip.add(Component.translatable("item.goetyarcana.void_crossbow.lore")
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("item.goetyarcana.void_crossbow.robe")
-                .withStyle(ChatFormatting.DARK_PURPLE));
-        tooltip.add(Component.translatable("item.goetyarcana.void_crossbow.recipe")
-                .withStyle(ChatFormatting.DARK_GRAY));
     }
 
     private static void muzzle(Player player, Level level) {

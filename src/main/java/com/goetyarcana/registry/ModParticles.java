@@ -23,6 +23,10 @@ public final class ModParticles {
     public static final RegistryObject<SimpleParticleType> VOID_FLAME =
             PARTICLE_TYPES.register("void_flame", () -> new SimpleParticleType(false));
 
+    /** 流血：会往下滴的血滴。 */
+    public static final RegistryObject<SimpleParticleType> BLOOD_DRIP =
+            PARTICLE_TYPES.register("blood_drip", () -> new SimpleParticleType(false));
+
     private ModParticles() {
     }
 

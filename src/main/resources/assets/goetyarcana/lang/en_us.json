@@ -1,14 +1,10 @@
 {
   "item.goetyarcana.soul_burst_focus": "Soul Burst Focus",
-  "item.goetyarcana.soul_burst_focus.info": "Hurls a shard of condensed void: 6 flat damage plus 7.5% of the target's max health, and not even a boss's damage cap can blunt it. Cast with a Void Staff to inflict Void Touched and steal the target's boons.",
+  "item.goetyarcana.soul_burst_focus.info": "A focus torn from the space between worlds. Hold it long enough and you can hear something breathing on the other side.",
   "death.attack.soulBurst": "%1$s was swallowed by the void",
   "death.attack.soulBurst.player": "%1$s was swallowed by %2$s's soul burst",
   "itemGroup.goetyarcana": "Goety Arcana",
   "item.goetyarcana.void_scythe": "Void Scythe (WIP)",
-  "item.goetyarcana.void_scythe.stats": "13 attack damage · 0.9 attack speed · 360° sweep",
-  "item.goetyarcana.void_scythe.charge": "Hold right-click to charge with both hands; release a piercing scythe wave (5s, passes through walls)",
-  "item.goetyarcana.void_scythe.effects": "On hit: 70% Void Touched I / 30% Void Touched II; 5% Execution",
-  "item.goetyarcana.void_scythe.creative_only": "Crafted by the End Ritual · requires a Dark Metal Scythe",
   "entity.goetyarcana.scythe_wave": "Void Scythe Wave",
   "effect.goetyarcana.execution": "Execution",
   "effect.goetyarcana.execution.description": "After 5 seconds: normal enemies die instantly, elites lose 10% max health, bosses lose 20% max health (ignores boss damage caps).",
@@ -21,12 +17,11 @@
   "effect.goetyarcana.bleed": "Bleed",
   "effect.goetyarcana.bleed.description": "Lose 2 HP per second for 6 seconds.",
   "item.goetyarcana.void_crossbow": "Void Crossbow",
-  "item.goetyarcana.void_crossbow.info": "Hits grant Void Eye: +20% reload speed and arrow velocity per stack, up to 3. At 3 stacks arrows apply Bleed. Prefers Void Bolts; plain arrows work as a fallback.",
-  "item.goetyarcana.void_crossbow.robe": "With a Void Robe: bolts home in on enemies, pierce up to 6 targets, then detonate at the cap.",
-  "item.goetyarcana.void_crossbow.recipe": "End Ritual: vanilla crossbow + 2 Void Eyes + 2 Void Blocks",
   "item.goetyarcana.void_crossbow_bolt": "Void Bolt",
-  "item.goetyarcana.void_crossbow_bolt.info": "Void Crossbow ammunition; explodes after 4 seconds whether it hits or not.",
   "item.goetyarcana.void_scythe.wip": "The model is currently WIP and may be revised later.",
   "effect.goetyarcana.void_explosion": "Void Explosion",
-  "effect.goetyarcana.void_explosion.description": "Explodes around the carrier after 4 seconds."
+  "effect.goetyarcana.void_explosion.description": "Explodes around the carrier after 4 seconds.",
+  "item.goetyarcana.void_scythe.lore": "A pair of scythes dragged out of an End rift, their blades still shaped like the tear they came from. They say the void whispers when you swing them.",
+  "item.goetyarcana.void_crossbow.lore": "Only one line about the first Void Crossbow survives: an eye that would not close was set into its stock. It does not aim - it simply sends what it sees into the void.",
+  "item.goetyarcana.void_crossbow_bolt.lore": "Liquid void poured into a shaft and left to set. Heavier than iron, and hungrier."
 }

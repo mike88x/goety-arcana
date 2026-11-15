@@ -146,13 +146,9 @@ public class VoidScytheItem extends SwordItem {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(Component.translatable("item.goetyarcana.void_scythe.stats")
+        tooltip.add(Component.translatable("item.goetyarcana.void_scythe.lore")
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("item.goetyarcana.void_scythe.charge")
-                .withStyle(ChatFormatting.DARK_PURPLE));
-        tooltip.add(Component.translatable("item.goetyarcana.void_scythe.effects")
-                .withStyle(ChatFormatting.DARK_PURPLE));
-        tooltip.add(Component.translatable("item.goetyarcana.void_scythe.creative_only")
+        tooltip.add(Component.translatable("item.goetyarcana.void_scythe.wip")
                 .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

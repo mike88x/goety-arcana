@@ -4,12 +4,14 @@ import com.goetyarcana.GoetyArcanaMod;
 import com.goetyarcana.registry.ModEffects;
 import com.goetyarcana.registry.ModItems;
 import com.goetyarcana.registry.ModParticles;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -85,6 +87,38 @@ public final class VoidCrossbowEvents {
                 player.getX(), top, player.getZ(),
                 stacks, spread, 0.02D, spread,
                 0.008D + 0.005D * stacks);
+    }
+
+    /**
+     * 流血的表现：每隔几 tick 从身上滴下红色粉尘，每秒再蹦两个伤害指示粒子。
+     *
+     * <p>效果本身由 {@code BleedEffect} 结算，这里只管视觉；只在服务端跑，
+     * 通过 {@code sendParticles} 同步给附近玩家。</p>
+     */
+    @SubscribeEvent
+    public static void onLivingTick(LivingEvent.LivingTickEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.level().isClientSide() || !entity.hasEffect(ModEffects.BLEED.get())) {
+            return;
+        }
+        if (entity.tickCount % 4 != 0 || !(entity.level() instanceof ServerLevel server)) {
+            return;
+        }
+        double x = entity.getX();
+        double z = entity.getZ();
+        double y = entity.getY() + entity.getBbHeight()
+                * (0.55D + 0.35D * entity.getRandom().nextDouble());
+        // 血滴自己会往下掉（有重力、会落地），所以只在上半身生成
+        server.sendParticles(ModParticles.BLOOD_DRIP.get(),
+                x, y, z, 1, 0.18D, 0.12D, 0.18D, 0.01D);
+        if (entity.getRandom().nextInt(3) == 0) {
+            server.sendParticles(ModParticles.BLOOD_DRIP.get(),
+                    x, y, z, 1, 0.22D, 0.18D, 0.22D, 0.02D);
+        }
+        if (entity.tickCount % 20 == 0) {
+            server.sendParticles(ParticleTypes.DAMAGE_INDICATOR,
+                    x, y, z, 1, 0.12D, 0.12D, 0.12D, 0.05D);
+        }
     }
 
     private static boolean holdingCrossbow(Player player) {

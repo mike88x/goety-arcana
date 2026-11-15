@@ -170,6 +170,19 @@ project/
 7. **长袍判定**：`combat/VoidRobe` 按注册 id `goety:void_robe` 查 `ForgeRegistries` 并缓存；Curios 是可选依赖，`CuriosVoidRobe` 全程反射（`CuriosApi.getCuriosInventory → LazyOptional.orElse → ICuriosItemHandler.getEquippedCurios → IItemHandler`），且只在 `ModList.isLoaded("curios")` 为真时被类加载，反射失败只降级 + 打一条 warn。
 8. **爆炸**：`VoidExplosion.explode` 统一入口（弩矢、debuff、空爆都走这里），表现层整体抬 0.3 格，伤害判定仍用原爆炸点；`VoidExplosionRenderer` 画地面双环。
 
+### 效果图标与特效
+
+- **虚空之眼按层数换图标**：原版一个 effect 只有一张图，这里用 Forge 的
+  `IClientMobEffectExtensions` 接管绘制——`VoidEyeEffect#initializeClient` 注册
+  `client/VoidEyeIcon`，`renderGuiIcon` / `renderInventoryIcon` 按 `instance.getAmplifier()`
+  选 `void_eye.png` / `void_eye_2.png` / `void_eye_3.png`，返回 `true` 表示不再画默认图标。
+- 图标由 `tools/gen_effect_icons.py` 生成（眯眼 → 半睁 → 睁大带青光；流血是一滴血）。
+- **流血表现**：`VoidCrossbowEvents#onLivingTick`（FORGE 总线）对带 `bleed` 的实体每 4 tick
+  发红色 `DustParticleOptions`（带重力，所以会往下滴），每 20 tick 补两个 `DAMAGE_INDICATOR`；
+  只在服务端发，`sendParticles` 自动同步。
+- **tooltip 原则**：物品 tooltip 只写世界观/来源文本（`*.lore`），不写合成方式与数值——
+  那些放《黑暗秘典》和 README，避免 hover 时糊一屏。镰刀额外保留一句模型 WIP 提示。
+
 ### 合成与手册
 
 - 虚空弩：`data/goetyarcana/recipes/void_crossbow.json`（`goety:ritual` + `craftType: end`，`activation_item` = 原版弩，4 个外围祭品）。
