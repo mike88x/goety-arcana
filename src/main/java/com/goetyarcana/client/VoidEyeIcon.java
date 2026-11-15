@@ -37,7 +37,8 @@ public final class VoidEyeIcon implements IClientMobEffectExtensions {
     public boolean renderInventoryIcon(MobEffectInstance instance,
                                        EffectRenderingInventoryScreen<?> screen,
                                        GuiGraphics guiGraphics, int x, int y, int blitOffset) {
-        guiGraphics.blit(icon(instance), x, y, 0, 0, 18, 18, 18, 18);
+        // 物品栏效果列表的默认图标是在 (x, y + 7) 画的，钩子给的 y 是行首，所以要自己 +7。
+        guiGraphics.blit(icon(instance), x, y + 7, 0, 0, 18, 18, 18, 18);
         return true;
     }
 
