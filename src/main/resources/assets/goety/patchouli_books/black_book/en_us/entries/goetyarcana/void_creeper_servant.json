@@ -1,0 +1,35 @@
+{
+  "name": "Void Creeper Servant",
+  "icon": "goetyarcana:void_creeper_head",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "What the Void Ruin Focus drags out is not wild. These are creepers that were swallowed and spat back - already sworn to a master the moment they land. They follow where you walk and squat where you tell them to keep watch."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "goetyarcana:void_creeper_servant"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "They do not argue much. They simply stare at someone. Whatever is stared at rarely has time to run - the creeper appears at its feet, then gives itself, and a little of the void, away. Whatever it fails to finish goes home marked."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Some come back with teal runes. Those have been enchanted. Wild witches say they are less patient and hold their grudges longer: whatever they blast seldom lives to see the next one."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(thing)enchanted one$() comes from the same void, only it returned marked with teal runes. Quieter, and much less patient - it stares too, but for far less time."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "goetyarcana:enchanted_void_creeper_servant"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Its blast is closer to a lightning strike: brighter to look at, and far worse to be near. Whatever survives one carries a heavier mark home - and wild witches say that mark bites once more when it runs out."
+    }
+  ]
+}

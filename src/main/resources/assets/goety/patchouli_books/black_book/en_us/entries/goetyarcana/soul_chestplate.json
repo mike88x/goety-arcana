@@ -1,0 +1,11 @@
+{
+  "name": "Soul Chestplate",
+  "icon": "minecraft:iron_chestplate",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "(placeholder) Soul Chestplate - not forged yet. Once the void and the soul agree on terms, this page will be filled with what it can do."
+    }
+  ]
+}

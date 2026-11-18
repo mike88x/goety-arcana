@@ -10,22 +10,18 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 检测是否穿着 Goety 的「虚空长袍」。
+ * 检测是否穿着 Goety 的长袍（虚空长袍 / 荒野长袍）。
  *
  * <p>这里不直接 import Goety 的类：Goety 若没装（或换了版本、改了注册名），
  * 只是这条联动失效，而不是崩在类初始化上。物品通过 {@link ForgeRegistries#ITEMS}
- * 按 id 查一次并缓存。</p>
+ * 按 id 查并缓存。</p>
  *
- * <p>虚空长袍既能穿在胸甲槽，也能放进 Curios 饰品栏；两处都算数。
+ * <p>长袍既能穿在胸甲槽，也能放进 Curios 饰品栏；两处都算数。
  * Curios 相关代码在 {@link CuriosVoidRobe}，只有装了 Curios 才会被加载。</p>
  */
 public final class VoidRobe {
 
     private static final ResourceLocation VOID_ROBE = new ResourceLocation("goety", "void_robe");
-
-    private static boolean resolved;
-    @Nullable
-    private static Item robeItem;
 
     private static boolean curiosChecked;
     private static boolean curiosLoaded;
@@ -35,7 +31,12 @@ public final class VoidRobe {
 
     /** 四个护甲槽或 Curios 饰品栏里任意一处装着虚空长袍即算数。 */
     public static boolean isWorn(LivingEntity entity) {
-        Item robe = robe();
+        return isWearing(entity, VOID_ROBE);
+    }
+
+    /** 通用版本：指定任意 Goety 长袍的物品 id。 */
+    public static boolean isWearing(LivingEntity entity, ResourceLocation robeId) {
+        Item robe = item(robeId);
         if (robe == null) {
             return false;
         }
@@ -61,11 +62,7 @@ public final class VoidRobe {
     }
 
     @Nullable
-    private static Item robe() {
-        if (!resolved) {
-            robeItem = ForgeRegistries.ITEMS.getValue(VOID_ROBE);
-            resolved = true;
-        }
-        return robeItem;
+    private static Item item(ResourceLocation id) {
+        return ForgeRegistries.ITEMS.getValue(id);
     }
 }

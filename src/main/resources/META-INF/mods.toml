@@ -11,8 +11,14 @@ description='''
 An addon for Goety adding focuses, weapons, and other arcane items — not limited to a single spell school.
 
 目前包含 / Currently included:
-- 裂魂聚晶 (Soul Burst Focus, Void)
+- 虚空崩灭聚晶 (Void Rupture Focus, Void)
+- 荆棘藤缚聚晶 (Bramble Bind Focus, Wild)
+- 虚空弩 / 虚空弩矢 (Void Crossbow & Void Bolt)
 - 虚空镰刀 (Void Scythe, End Ritual weapon with a piercing, wall-phasing wave)
+- 虚空苦力怕仆从 / 附魔变种 (Void Creeper servants)
+- 虚空苦力怕与头颅 (Wild Void Creeper & Void Creeper Head)
+- 虚空护身符 (Void Amulet: damage conversion, void rescue, death blast + Void Aegis)
+- 虚空碎片 (Void Shard)
 '''
 
 [[dependencies.goetyarcana]]

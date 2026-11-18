@@ -1,0 +1,11 @@
+{
+  "name": "Soul Boots",
+  "icon": "minecraft:iron_boots",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "(placeholder) Soul Boots - not forged yet. Once the void and the soul agree on terms, this page will be filled with what it can do."
+    }
+  ]
+}

@@ -132,6 +132,25 @@ project/
 | `VOID_AOE_MULTIPLIER` | 范围伤害倍率 | 0.5F |
 | `PROJECTILE_LIFETIME` | 射弹存活 tick | 60 |
 
+### 荆棘藤缚
+
+`src/main/java/com/goetyarcana/BrambleBindBalance.java`：
+
+| 常量 | 含义 | 默认 |
+| --- | --- | --- |
+| `SOUL_COST` | 灵魂能量消耗 | 15 |
+| `CAST_DURATION` | 吟唱 tick（3 秒） | 60 |
+| `SPELL_COOLDOWN` | 冷却 tick（20 秒） | 400 |
+| `SEED_VELOCITY` | 种子初速 | 1.1F |
+| `SEED_LIFETIME` | 种子待机时长（10 秒） | 200 tick |
+| `CHECK_RADIUS` | 默认半宽（3×3） | 1.5 |
+| `STAFF_RADIUS` / `ROBE_RADIUS` | 荒野魔杖 / 荒野长袍半宽（7×7 / 9×9） | 3.5 / 4.5 |
+| `ENTANGLE_TICKS` / `STAFF_ENTANGLE_TICKS` | 默认 / 荒野魔杖缠绕时长（5 秒 / 15 秒） | 100 / 300 tick |
+| `MAX_TARGETS` / `STAFF_MAX_TARGETS` | 单次最多缠住几个目标（默认 / 荒野魔杖） | 8 / 16 |
+| `THORN_DAMAGE` | 红刺每秒伤害 | 2.0F |
+| `VINE_POISON_BASE` / `VINE_POISON_STEP` | 藤毒第 1 秒伤害 / 每秒递增 | 1.0F / 0.75F |
+| `BrambleVinesEntity.DEATH_TICKS` | 死亡动画长度 | 14 tick |
+
 ### 虚空弩（散落在各类里）
 
 | 位置 | 数值 |
@@ -170,6 +189,19 @@ project/
 7. **长袍判定**：`combat/VoidRobe` 按注册 id `goety:void_robe` 查 `ForgeRegistries` 并缓存；Curios 是可选依赖，`CuriosVoidRobe` 全程反射（`CuriosApi.getCuriosInventory → LazyOptional.orElse → ICuriosItemHandler.getEquippedCurios → IItemHandler`），且只在 `ModList.isLoaded("curios")` 为真时被类加载，反射失败只降级 + 打一条 warn。
 8. **爆炸**：`VoidExplosion.explode` 统一入口（弩矢、debuff、空爆都走这里），表现层整体抬 0.3 格，伤害判定仍用原爆炸点；`VoidExplosionRenderer` 画地面双环。
 
+### 荆棘藤缚
+
+1. **种子**：`BrambleSeedEntity`（`ThrowableProjectile`）。`onHitBlock` 取命中点后 `stickAt` 把种子压到地表 +0.05 格并半埋，`DATA_STUCK` 同步给客户端——不这样做客户端会继续按弹道飞、看起来在飘。
+2. **范围与时长由施法决定**：`BrambleBindSpell` 里用 `typeStaff(staff, SpellType.WILD)` 判断荒野魔杖、`WildRobe.isWorn` 判断荒野长袍，把 `radius / entangleTicks / poison / maxTargets` 通过 `configure(...)` 写进种子（并进 NBT），长袍覆盖魔杖的范围，荒野魔杖把上限抬到 16。范围指示粒子按 `radius` 生成 7×7 或 13×13 取样。
+3. **藤蔓**：`BrambleVinesEntity`（普通 `Entity`）。生成时记录目标位置/朝向与 `noAi` 原值，每 tick `setPos` 钉住目标——BOSS 会无视 `noAi`，光设标志位按不住它。结束时 `release()` 还原 `noAi` 并清 `entangled` / `vine_poison`；`remove()` 里再兜一次，防止区块卸载把怪留成无 AI。
+4. **硬控**：`BrambleBindEvents` 每 tick 清速度、停寻路、打断使用；取消 `LivingEntityUseItemEvent.Start/Tick`、`PlayerInteractEvent.RightClickItem/RightClickBlock`，并取消被缠者的攻击（`LivingAttackEvent`）。
+5. **红刺与藤毒**：红刺在藤蔓里每 20 tick `damageSources().thorns` 结算 2 点。藤毒**伤害不走 effect**——`VinePoisonEffect` 只做图标/计时，真正的伤害由藤蔓每秒用自定义伤害类型 `goetyarcana:vine_poison` 结算，伤害 `1.0 + 0.75×(秒-1)` 递增；该类型在 `data/minecraft/tags/damage_type/` 里挂了 `bypasses_armor / effects / enchantments / invulnerability`，所以无视护甲、抗性、附魔、无敌帧，亡灵与免疫负面效果的首领也照吃。**注意红刺与藤毒每 20 tick 各结算一次、间隔正好 10 tick**，直接被 20 tick 的受击无敌帧吞掉，所以结算前手动 `invulnerableTime = 0`。
+   另外 `BrambleBindEvents#onHeal` 会取消 `LivingHealEvent`，藤毒期间禁疗。
+6. **持续陷阱**：种子在整段 `SEED_LIFETIME`（200 tick）里一直有效，抓到目标**不**自我销毁；`caughtIds` 记录已缠过的实体 id，避免同一只怪被反复缠，`maxTargets` 是整颗种子的总配额（8 / 荒野魔杖 16），每 5 tick 扫一次范围，后进场的敌人也会被抓。
+7. **渲染**：种子是 4 段小方块拼的模型（贴图 32×32：左上主体、右上茎，`pose.scale(0.72F)`）；藤蔓是 `BrambleVinesRenderer` 画的单条螺旋藤——前 16 tick 生长、接着收紧、最后 `DEATH_TICKS` 缩回地下；半径/高度/粗细按目标的 `BbWidth/BbHeight`（同步在 `DATA_WIDTH/DATA_HEIGHT`）缩放，下限「半宽 + 0.24」避免穿模。
+8. **中毒标记**：`client/PoisonSkullMarker` 挂 `RenderLivingEvent.Post`，对带 `vine_poison` 的生物在头顶 `getBbHeight() + 0.45` 处画一枚半透明全亮骷髅（`textures/entity/poison_skull.png`）。
+9. **配方**：`data/goetyarcana/recipes/bramble_bind_focus.json`（`goety:ritual` + `craftType: overgrown`，祭品 `goety:entangling_focus`，材料 2×`poison_quill_seed` + `overgrown_roots` + `minecraft:vine`，7 灵魂 / 13 秒）。
+
 ### 效果图标与特效
 
 - **虚空之眼按层数换图标**：原版一个 effect 只有一张图，这里用 Forge 的
@@ -180,6 +212,8 @@ project/
 - **流血表现**：`VoidCrossbowEvents#onLivingTick`（FORGE 总线）对带 `bleed` 的实体每 4 tick
   发红色 `DustParticleOptions`（带重力，所以会往下滴），每 20 tick 补两个 `DAMAGE_INDICATOR`；
   只在服务端发，`sendParticles` 自动同步。
+- **自定义 effect 必须自带贴图**：原版会去 `assets/<modid>/textures/mob_effect/<注册名>.png` 找图标，
+  缺文件就是紫黑缺失贴图（HUD 左上角那块）。`entangled.png` / `vine_poison.png` 都是 32×32（尺寸不强制 18×18）。
 - **tooltip 原则**：物品 tooltip 只写世界观/来源文本（`*.lore`），不写合成方式与数值——
   那些放《黑暗秘典》和 README，避免 hover 时糊一屏。镰刀额外保留一句模型 WIP 提示。
 

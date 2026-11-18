@@ -1,0 +1,11 @@
+{
+  "name": "虚空胸甲",
+  "icon": "minecraft:iron_chestplate",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "（占位）虚空胸甲——尚未锻造。等虚空与灵魂谈妥条件之后，这一页会写满它的能力。"
+    }
+  ]
+}

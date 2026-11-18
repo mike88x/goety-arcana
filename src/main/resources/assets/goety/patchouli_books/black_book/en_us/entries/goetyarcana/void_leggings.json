@@ -1,0 +1,11 @@
+{
+  "name": "Void Leggings",
+  "icon": "minecraft:iron_leggings",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "(placeholder) Void Leggings - not forged yet. Once the void and the soul agree on terms, this page will be filled with what it can do."
+    }
+  ]
+}

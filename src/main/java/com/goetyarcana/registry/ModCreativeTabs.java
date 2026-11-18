@@ -29,6 +29,14 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.VOID_CROSSBOW.get());
                         output.accept(ModItems.VOID_CROSSBOW_BOLT.get());
                         output.accept(ModItems.SOUL_BURST_FOCUS.get());
+                        output.accept(ModItems.BRAMBLE_BIND_FOCUS.get());
+                        output.accept(ModItems.VOID_RUPTURE_FOCUS.get());
+                        output.accept(ModItems.VOID_SHARD.get());
+                        output.accept(ModItems.VOID_CREEPER_HEAD.get());
+                        output.accept(ModItems.VOID_AMULET.get());
+                        output.accept(ModItems.VOID_CREEPER_SPAWN_EGG.get());
+                        output.accept(ModItems.VOID_CREEPER_SERVANT_SPAWN_EGG.get());
+                        output.accept(ModItems.ENCHANTED_VOID_CREEPER_SERVANT_SPAWN_EGG.get());
                     })
                     .build());
 

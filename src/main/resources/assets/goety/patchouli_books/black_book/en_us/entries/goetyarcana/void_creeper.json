@@ -1,0 +1,23 @@
+{
+  "name": "Void Creeper",
+  "icon": "goetyarcana:void_creeper_head",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A creeper from the far islands of the End. Nobody brought them here; the void grew them: violet hide, a slow walk, and a pair of eyes that belong to nothing alive."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "goetyarcana:void_creeper"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "They pick no fights. But look into those eyes and they will look back. Stare long enough and the body begins to swell, and the air turns faintly purple. Once properly offended, it simply appears in front of you."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Others say they are merely easy to offend: a stray hit, one glance too many, and it is written down. Wild witches call it a void temper."
+    }
+  ]
+}

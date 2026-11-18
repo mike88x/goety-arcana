@@ -1,0 +1,22 @@
+{
+  "name": "Void Ruin Focus",
+  "icon": "goetyarcana:void_rupture_focus",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This focus is not for blasting. It is for $(l:goety:goetyarcana/void_creeper_servant)hiring$(). Each cast drags three Void Creeper Servants out of the void; wear a $(l:crafts/garment/void_robe)Void Robe$() and it becomes six."
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_rupture_focus"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Cast with a $(l:crafts/staff/void_staff)Void Staff$() and each servant has a three-in-ten chance to come out of the void enchanted. They look much the same - only the runes burn brighter, and the blast is far less forgiving."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_rupture_focus": 1
+  }
+}

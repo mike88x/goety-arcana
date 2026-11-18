@@ -1,0 +1,11 @@
+{
+  "name": "灵魂靴子",
+  "icon": "minecraft:iron_boots",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "（占位）灵魂靴子——尚未锻造。等虚空与灵魂谈妥条件之后，这一页会写满它的能力。"
+    }
+  ]
+}

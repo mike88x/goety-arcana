@@ -39,18 +39,18 @@ public final class VoidCrossbowEvents {
         if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) {
             return;
         }
-        if (!(arrow.getOwner() instanceof Player player) || !holdingCrossbow(player)) {
+        if (!(arrow.getOwner() instanceof Player player)) {
+            return;
+        }
+        if (arrow instanceof com.goetyarcana.entity.VoidBoltEntity) {
+            // 弩矢自己会在命中时叠层（末影人吃的是无 owner 的魔法伤害，事件里拿不到 directEntity）
+            return;
+        }
+        if (!holdingCrossbow(player)) {
             return;
         }
 
-        MobEffectInstance current = player.getEffect(ModEffects.VOID_EYE.get());
-        int amplifier = current == null ? 0 : Math.min(2, current.getAmplifier() + 1);
-        player.addEffect(new MobEffectInstance(ModEffects.VOID_EYE.get(), DURATION, amplifier,
-                false, true, true));
-        if (amplifier >= 2) {
-            target.addEffect(new MobEffectInstance(ModEffects.BLEED.get(), 120, 0,
-                    false, true, true));
-        }
+        addEyeStack(player, target);
     }
 
     @SubscribeEvent
@@ -121,7 +121,23 @@ public final class VoidCrossbowEvents {
         }
     }
 
-    private static boolean holdingCrossbow(Player player) {
+    /** 给玩家叠一层虚空之眼；三层时额外给目标流血。弩矢与普通箭都会调到这里。 */
+    public static void addEyeStack(Player player, LivingEntity target) {
+        // 规则回到「必须手上有虚空弩」：切手/换武器命中不再叠层（层数也会在 tick 里被清掉）
+        if (!holdingCrossbow(player)) {
+            return;
+        }
+        MobEffectInstance current = player.getEffect(ModEffects.VOID_EYE.get());
+        int amplifier = current == null ? 0 : Math.min(2, current.getAmplifier() + 1);
+        player.addEffect(new MobEffectInstance(ModEffects.VOID_EYE.get(), DURATION, amplifier,
+                false, true, true));
+        if (amplifier >= 2) {
+            target.addEffect(new MobEffectInstance(ModEffects.BLEED.get(), 120, 0,
+                    false, true, true));
+        }
+    }
+
+    public static boolean holdingCrossbow(Player player) {
         return player.getMainHandItem().is(ModItems.VOID_CROSSBOW.get())
                 || player.getOffhandItem().is(ModItems.VOID_CROSSBOW.get());
     }

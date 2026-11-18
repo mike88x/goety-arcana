@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    "BVB",
+    " B "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "B": {
+      "item": "minecraft:bone_block"
+    },
+    "V": {
+      "item": "goetyarcana:void_shard"
+    }
+  },
+  "result": {
+    "item": "goetyarcana:void_amulet"
+  }
+}

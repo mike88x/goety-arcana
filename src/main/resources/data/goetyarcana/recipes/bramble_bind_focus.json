@@ -1,0 +1,27 @@
+{
+  "type": "goety:ritual",
+  "ritual_type": "goety:craft",
+  "activation_item": {
+    "item": "goety:entangling_focus"
+  },
+  "craftType": "overgrown",
+  "soulCost": 7,
+  "duration": 13,
+  "ingredients": [
+    {
+      "item": "goety:poison_quill_seed"
+    },
+    {
+      "item": "goety:poison_quill_seed"
+    },
+    {
+      "item": "goety:overgrown_roots"
+    },
+    {
+      "item": "minecraft:vine"
+    }
+  ],
+  "result": {
+    "item": "goetyarcana:bramble_bind_focus"
+  }
+}

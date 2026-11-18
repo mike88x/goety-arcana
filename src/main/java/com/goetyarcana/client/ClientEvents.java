@@ -40,12 +40,18 @@ public final class ClientEvents {
         event.registerEntityRenderer(ModEntities.VOID_BOLT.get(), VoidBoltRenderer::new);
         event.registerEntityRenderer(ModEntities.VOID_EXPLOSION.get(), VoidExplosionRenderer::new);
         event.registerEntityRenderer(ModEntities.EXECUTION_SLASH.get(), ExecutionSlashRenderer::new);
+        event.registerEntityRenderer(ModEntities.BRAMBLE_SEED.get(), BrambleSeedRenderer::new);
+        event.registerEntityRenderer(ModEntities.BRAMBLE_VINES.get(), BrambleVinesRenderer::new);
+        event.registerEntityRenderer(ModEntities.VOID_CREEPER_SERVANT.get(), VoidCreeperServantRenderer::new);
+        event.registerEntityRenderer(ModEntities.ENCHANTED_VOID_CREEPER_SERVANT.get(), EnchantedVoidCreeperServantRenderer::new);
+        event.registerEntityRenderer(ModEntities.VOID_CREEPER.get(), VoidCreeperRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.VOID_FLAME.get(), VoidFlameParticle.Provider::new);
         event.registerSpriteSet(ModParticles.BLOOD_DRIP.get(), BloodDripParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.WILD_RUNE.get(), WildRuneParticle.Provider::new);
     }
 
     @SubscribeEvent
@@ -75,6 +81,11 @@ public final class ClientEvents {
                 charged);
 
         event.enqueueWork(() -> {
+            // Curios：护身符的胸口渲染层（Curios 未安装时跳过）
+            if (net.minecraftforge.fml.ModList.get().isLoaded("curios")) {
+                top.theillusivec4.curios.api.client.CuriosRendererRegistry.register(
+                        ModItems.VOID_AMULET.get(), VoidAmuletCurioRenderer::new);
+            }
             MinecraftForge.EVENT_BUS.addListener(ClientEvents::onClientTick);
         });
     }

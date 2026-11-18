@@ -57,6 +57,9 @@ dependencies {
 
     // Goety 本体（1.20.1 / Goety 2.5.x）
     implementation fg.deobf("maven.modrinth:goety:${goety_version}")
+
+    // Curios：用测试整合包里的本地 jar 编译（离线环境无法从 maven 拉取）
+    compileOnly files("../libs/curios-forge-5.14.1+1.20.1.jar")
 }
 
 tasks.named('jar', Jar).configure {

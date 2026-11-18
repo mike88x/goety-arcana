@@ -1,12 +1,23 @@
 {
-  "name": "虚空护身符（规划中）",
-  "icon": "minecraft:echo_shard",
+  "name": "虚空护身符",
+  "icon": "goetyarcana:void_amulet",
   "category": "goety:goetyarcana",
   "pages": [
     {
       "type": "patchouli:text",
-      "title": "虚空护身符",
-      "text": "该物品尚未实装，此页仅为占位。"
+      "text": "一颗牙，一根红线。第一个动这个念头的人没有留下名字，只留下一条规矩：别把它当成护身符，它只是一份契约上的签名。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "goetyarcana:void_amulet"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "戴上它，你造成的伤害会有一小部分被改写成虚空本身的东西——那部分不吃护甲，也不吃抗性。代价是：虚空会开始数你的次数。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "掉进虚空时，它记得把你拽回地面（十分钟只能拽一次）。而当你真正要死的那一刻，它会替你把这一下挡掉，然后连自己带周围一起炸开：你从别人的血里被浇回来，并在一段时间里几乎无法被伤害。"
     }
   ]
 }

@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "goetyarcana:void_wave",
-    "goetyarcana:execution"
+    "goetyarcana:execution",
+    "goetyarcana:vine_poison",
+    "goetyarcana:void_blast",
+    "goetyarcana:void_amulet"
   ]
 }

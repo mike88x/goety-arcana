@@ -1,0 +1,35 @@
+{
+  "name": "虚空苦力怕仆从",
+  "icon": "goetyarcana:void_creeper_head",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "虚空崩灭聚晶拽出来的东西不是野生的。它们是被吞进去、又被吐回来的苦力怕，出来时已经认了主——你走到哪，它们跟到哪；你让它们守哪，它们就蹲在哪。"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "goetyarcana:void_creeper_servant"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "它们不太会吵架，只是会盯着人看。被盯上的东西往往来不及跑——苦力怕会忽然出现在脚边，然后连自己带那点虚空一起交出去。炸不干净的，会带着一个记号回去。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "有些从虚空回来时身上多了青色符文，那是被附魔过的。荒野的巫觋说，这种的更不耐烦，也记仇得更久：它炸过的东西，多半活不到下一次。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)附魔的那一种$()也来自同一处虚空，只是回来时身上多了青色符文。它们更安静，也更不耐烦——同样盯着人看，但看得短得多。"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "goetyarcana:enchanted_void_creeper_servant"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "它的爆炸更接近闪电劈过的那一下：亮得刺眼，也疼得多。被它炸过一次还没死的，会带着更重的记号回去——荒野的说法是，记号到期时还会再咬你一口。"
+    }
+  ]
+}

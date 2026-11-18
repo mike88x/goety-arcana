@@ -46,7 +46,8 @@ public final class VoidEyeIcon implements IClientMobEffectExtensions {
     public boolean renderGuiIcon(MobEffectInstance instance, Gui gui, GuiGraphics guiGraphics,
                                  int x, int y, float z, float alpha) {
         // 原版 HUD 是在 24x24 的底图里按 (x+3, y+3) 画 18x18 图标的，这里跟它对齐。
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, alpha);
+        float safeAlpha = alpha <= 0.0F ? 1.0F : alpha;
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, safeAlpha);
         guiGraphics.blit(icon(instance), x + 3, y + 3, 0, 0, 18, 18, 18, 18);
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         return true;

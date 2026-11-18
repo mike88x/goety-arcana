@@ -1,0 +1,29 @@
+{
+  "name": "荆棘藤缚",
+  "icon": "goetyarcana:bramble_bind_focus",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "荆棘藤缚",
+      "text": "射出一颗带刺的藤种。种子插进土里会一直等着，一旦有敌对生物踩进 3×3 的范围，荆棘藤便破土而出，把目标死死缠住 5 秒。陷阱会留在原地直到十秒结束，之后走进范围的敌人同样会被缠上——期间不能移动、不能用物品或技能，首领也不例外。藤上的红刺每秒扎 2 点伤害。"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:bramble_bind_focus"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "荒野的馈赠",
+      "text": "以荒野魔杖施展时，范围扩大到 7×7、缠绕延长到 15 秒，一次最多能缠住 16 个目标。若身上还披着荒野长袍，范围进一步到 9×9（长袍的范围覆盖魔杖），并且藤刺会渗出毒来。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "藤毒",
+      "text": "披荒野长袍时，被缠住的目标会中藤毒：持续时间与缠绕一致，每秒结算一次伤害，越往后越痛。它无视护甲、抗性、附魔与无敌帧，亡灵与免疫负面效果的首领同样会掉血；中毒期间目标完全无法被治疗——被缠满十五秒，足以送走大多数东西。"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:bramble_bind_focus": 1
+  }
+}

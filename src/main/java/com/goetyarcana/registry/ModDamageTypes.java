@@ -31,6 +31,18 @@ public final class ModDamageTypes {
             Registries.DAMAGE_TYPE,
             new ResourceLocation(GoetyArcanaMod.MOD_ID, "execution"));
 
+    public static final ResourceKey<DamageType> VOID_AMULET = ResourceKey.create(
+            Registries.DAMAGE_TYPE,
+            new ResourceLocation(GoetyArcanaMod.MOD_ID, "void_amulet"));
+
+    public static final ResourceKey<DamageType> VOID_BLAST = ResourceKey.create(
+            Registries.DAMAGE_TYPE,
+            new ResourceLocation(GoetyArcanaMod.MOD_ID, "void_blast"));
+
+    public static final ResourceKey<DamageType> VINE_POISON = ResourceKey.create(
+            Registries.DAMAGE_TYPE,
+            new ResourceLocation(GoetyArcanaMod.MOD_ID, "vine_poison"));
+
     public static DamageSource source(Level level, ResourceKey<DamageType> key,
                                       @Nullable Entity directEntity, @Nullable Entity owner) {
         Holder<DamageType> holder = level.registryAccess()

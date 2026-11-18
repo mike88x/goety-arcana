@@ -280,6 +280,9 @@ public class VoidBoltEntity extends AbstractArrow {
         }
         living.addEffect(new MobEffectInstance(ModEffects.VOID_EXPLOSION.get(),
                 80, 0, false, true, true));
+        if (this.getOwner() instanceof net.minecraft.world.entity.player.Player player) {
+            com.goetyarcana.event.VoidCrossbowEvents.addEyeStack(player, living);
+        }
         this.discard();
     }
 
@@ -290,6 +293,9 @@ public class VoidBoltEntity extends AbstractArrow {
         }
         this.saveHeading();
         this.dealPierceDamage(living);
+        if (this.getOwner() instanceof net.minecraft.world.entity.player.Player player) {
+            com.goetyarcana.event.VoidCrossbowEvents.addEyeStack(player, living);
+        }
         this.pierces++;
 
         if (this.pierces >= MAX_PIERCES) {

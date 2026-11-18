@@ -1,0 +1,23 @@
+{
+  "name": "虚空苦力怕",
+  "icon": "goetyarcana:void_creeper_head",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "末地外岛深处的苦力怕。它们不是被谁带进来的，是虚空自己养出来的：紫色的皮、慢吞吞的步子，还有一双不属于任何活物的眼睛。"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "goetyarcana:void_creeper"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "它们不主动惹事。可你要是盯着那双眼睛看——它也会看你。看得久了，它的身体会一点点鼓起来，空气里泛起紫色。等它彻底恼了，就会凭空出现在你面前。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "也有人说，它们只是太容易被冒犯。挨一下打、被谁多看两眼，都会记账。荒野的巫觋管这个叫“虚空脾气”。"
+    }
+  ]
+}

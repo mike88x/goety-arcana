@@ -5,6 +5,7 @@ import com.goetyarcana.entity.ExecutionSlashEntity;
 import com.goetyarcana.entity.ScytheWaveEntity;
 import com.goetyarcana.entity.SoulBurstEntity;
 import com.goetyarcana.entity.VoidBoltEntity;
+import com.goetyarcana.entity.VoidCreeperServant;
 import com.goetyarcana.entity.VoidExplosionEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -63,6 +64,52 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .updateInterval(1)
                     .build(GoetyArcanaMod.MOD_ID + ":execution_slash"));
+
+    /** 虚空苦力怕仆从 */
+    public static final RegistryObject<EntityType<VoidCreeperServant>> VOID_CREEPER_SERVANT =
+            ENTITY_TYPES.register("void_creeper_servant", () -> EntityType.Builder
+                    .<VoidCreeperServant>of(VoidCreeperServant::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.7F)
+                    .clientTrackingRange(10)
+                    .build(GoetyArcanaMod.MOD_ID + ":void_creeper_servant"));
+
+    /** 自然生成的虚空苦力怕（末地外岛，中立） */
+    public static final RegistryObject<EntityType<com.goetyarcana.entity.VoidCreeper>> VOID_CREEPER =
+            ENTITY_TYPES.register("void_creeper", () -> EntityType.Builder
+                    .<com.goetyarcana.entity.VoidCreeper>of(com.goetyarcana.entity.VoidCreeper::new,
+                            MobCategory.MONSTER)
+                    .sized(0.6F, 1.7F)
+                    .clientTrackingRange(10)
+                    .build(GoetyArcanaMod.MOD_ID + ":void_creeper"));
+
+    /** 附魔虚空苦力怕仆从（虚空魔杖施法时 30% 替换） */
+    public static final RegistryObject<EntityType<com.goetyarcana.entity.EnchantedVoidCreeperServant>>
+            ENCHANTED_VOID_CREEPER_SERVANT =
+            ENTITY_TYPES.register("enchanted_void_creeper_servant", () -> EntityType.Builder
+                    .<com.goetyarcana.entity.EnchantedVoidCreeperServant>of(
+                            com.goetyarcana.entity.EnchantedVoidCreeperServant::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.7F)
+                    .clientTrackingRange(10)
+                    .build(GoetyArcanaMod.MOD_ID + ":enchanted_void_creeper_servant"));
+
+    /** 荆棘藤缚的种子 */
+    public static final RegistryObject<EntityType<com.goetyarcana.entity.BrambleSeedEntity>> BRAMBLE_SEED =
+            ENTITY_TYPES.register("bramble_seed", () -> EntityType.Builder
+                    .<com.goetyarcana.entity.BrambleSeedEntity>of(com.goetyarcana.entity.BrambleSeedEntity::new,
+                            MobCategory.MISC)
+                    .sized(0.25F, 0.25F)                    .clientTrackingRange(8)
+                    .updateInterval(2)
+                    .build(GoetyArcanaMod.MOD_ID + ":bramble_seed"));
+
+    /** 缠在目标身上的藤蔓 */
+    public static final RegistryObject<EntityType<com.goetyarcana.entity.BrambleVinesEntity>> BRAMBLE_VINES =
+            ENTITY_TYPES.register("bramble_vines", () -> EntityType.Builder
+                    .<com.goetyarcana.entity.BrambleVinesEntity>of(
+                            com.goetyarcana.entity.BrambleVinesEntity::new, MobCategory.MISC)
+                    .sized(1.2F, 2.2F)
+                    .clientTrackingRange(10)
+                    .updateInterval(2)
+                    .build(GoetyArcanaMod.MOD_ID + ":bramble_vines"));
 
     private ModEntities() {
     }

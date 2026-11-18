@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "goetyarcana:block/void_creeper_head",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "goetyarcana:block/void_creeper_head",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "goetyarcana:block/void_creeper_head",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "goetyarcana:block/void_creeper_head",
+      "y": 270
+    }
+  }
+}

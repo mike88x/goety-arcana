@@ -1,12 +1,23 @@
 {
-  "name": "Void Amulet (Planned)",
-  "icon": "minecraft:echo_shard",
+  "name": "Void Amulet",
+  "icon": "goetyarcana:void_amulet",
   "category": "goety:goetyarcana",
   "pages": [
     {
       "type": "patchouli:text",
-      "title": "Void Amulet",
-      "text": "Not implemented yet. This page exists only as a placeholder."
+      "text": "A fang, a red cord. Whoever first thought of it left no name - only a rule: do not call it a charm. It is a signature on a contract."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "goetyarcana:void_amulet"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Wear it and a share of the damage you deal is rewritten into the void itself - that part ignores armour and resistance alike. The price: the void starts counting."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Drop into the void and it remembers to pull you back (once every ten minutes). And when you are truly about to die, it takes the blow, then bursts into the void around you: you are irrigated with other people's blood, and for a while almost nothing can hurt you."
     }
   ]
 }

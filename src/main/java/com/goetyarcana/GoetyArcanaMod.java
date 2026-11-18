@@ -4,6 +4,7 @@ import com.goetyarcana.network.ModNetwork;
 import com.goetyarcana.registry.ModCreativeTabs;
 import com.goetyarcana.registry.ModEffects;
 import com.goetyarcana.registry.ModEntities;
+import com.goetyarcana.registry.ModBlocks;
 import com.goetyarcana.registry.ModItems;
 import com.goetyarcana.registry.ModParticles;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,10 +31,29 @@ public class GoetyArcanaMod {
     public GoetyArcanaMod() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.register(modBus);
+        ModBlocks.register(modBus);
         ModEntities.register(modBus);
         ModEffects.register(modBus);
         ModParticles.register(modBus);
         ModCreativeTabs.register(modBus);
         ModNetwork.register();
+        // 注意：SpawnPlacements 必须在 FMLCommonSetup（实体已注册）里登记，
+        // 在构造函数里直接 get() 会抛 "Registry Object not present"。
+        modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) ->
+                event.enqueueWork(() -> net.minecraft.world.entity.SpawnPlacements.register(
+                        ModEntities.VOID_CREEPER.get(),
+                        net.minecraft.world.entity.SpawnPlacements.Type.ON_GROUND,
+                        net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                        com.goetyarcana.entity.VoidCreeper::checkSpawnRules)));
+        // 生物实体必须在这里登记属性表，否则构造时 AttributeSupplier 为 null 直接崩
+        modBus.addListener((net.minecraftforge.event.entity.EntityAttributeCreationEvent event) ->
+                event.put(ModEntities.VOID_CREEPER_SERVANT.get(),
+                        com.goetyarcana.entity.VoidCreeperServant.createAttributes().build()));
+        modBus.addListener((net.minecraftforge.event.entity.EntityAttributeCreationEvent event) ->
+                event.put(ModEntities.ENCHANTED_VOID_CREEPER_SERVANT.get(),
+                        com.goetyarcana.entity.EnchantedVoidCreeperServant.createAttributes().build()));
+        modBus.addListener((net.minecraftforge.event.entity.EntityAttributeCreationEvent event) ->
+                event.put(ModEntities.VOID_CREEPER.get(),
+                        com.goetyarcana.entity.VoidCreeper.createAttributes().build()));
     }
 }

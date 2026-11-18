@@ -27,6 +27,10 @@ public final class ModParticles {
     public static final RegistryObject<SimpleParticleType> BLOOD_DRIP =
             PARTICLE_TYPES.register("blood_drip", () -> new SimpleParticleType(false));
 
+    /** 荒野符文：仿附魔符文笔画的荒野字形，用作荆棘藤缚的范围指示。 */
+    public static final RegistryObject<SimpleParticleType> WILD_RUNE =
+            PARTICLE_TYPES.register("wild_rune", () -> new SimpleParticleType(false));
+
     private ModParticles() {
     }
 

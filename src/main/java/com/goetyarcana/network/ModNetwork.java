@@ -49,6 +49,23 @@ public final class ModNetwork {
                 .decoder(ExecutionDeathPacket::decode)
                 .consumerMainThread(ExecutionDeathPacket::handle)
                 .add();
+
+        CHANNEL.messageBuilder(VoidCursePacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(VoidCursePacket::encode)
+                .decoder(VoidCursePacket::decode)
+                .consumerMainThread(VoidCursePacket::handle)
+                .add();
+    }
+
+    /** 把「某只生物中了砰砰诅咒」告诉附近客户端（BOSS 上效果会被即时清掉，只能这样同步）。 */
+    public static void sendVoidCurse(ServerLevel level, Entity target, int durationTicks) {
+        VoidCursePacket packet = new VoidCursePacket(target.getId(), durationTicks);
+        double range = 96.0D * 96.0D;
+        for (ServerPlayer player : level.players()) {
+            if (player.distanceToSqr(target) <= range) {
+                CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+            }
+        }
     }
 
     public static void sendScytheSwing() {
@@ -107,6 +124,27 @@ public final class ModNetwork {
             NetworkEvent.Context context = contextSupplier.get();
             context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
                     () -> () -> ExecutionDeathAnimation.onPacket(packet.entityId())));
+            context.setPacketHandled(true);
+        }
+    }
+
+    /** 砰砰诅咒的客户端标记。 */
+    public record VoidCursePacket(int entityId, int durationTicks) {
+
+        public static void encode(VoidCursePacket packet, FriendlyByteBuf buffer) {
+            buffer.writeVarInt(packet.entityId());
+            buffer.writeVarInt(packet.durationTicks());
+        }
+
+        public static VoidCursePacket decode(FriendlyByteBuf buffer) {
+            return new VoidCursePacket(buffer.readVarInt(), buffer.readVarInt());
+        }
+
+        public static void handle(VoidCursePacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
+            NetworkEvent.Context context = contextSupplier.get();
+            context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                    () -> () -> com.goetyarcana.client.VoidCurseCache.accept(
+                            packet.entityId(), packet.durationTicks())));
             context.setPacketHandled(true);
         }
     }

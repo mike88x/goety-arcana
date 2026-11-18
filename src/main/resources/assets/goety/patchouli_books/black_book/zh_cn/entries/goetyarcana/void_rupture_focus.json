@@ -1,0 +1,22 @@
+{
+  "name": "虚空崩灭聚晶",
+  "icon": "goetyarcana:void_rupture_focus",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "聚晶不是用来炸的，是用来请人的。一次施法会从虚空里拽出三只$(l:goety:goetyarcana/void_creeper_servant)虚空苦力怕仆从$()；若你披着虚空长袍，这个数字变成六只。"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_rupture_focus"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "以$(l:crafts/staff/void_staff)虚空魔杖$()施法时，每一只都有三成概率被替换成附魔的那一种。它们看着差不多，只是身上的符文更亮，炸起来也更不讲道理。"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_rupture_focus": 1
+  }
+}

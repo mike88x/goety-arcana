@@ -1,0 +1,29 @@
+{
+  "name": "Bramble Bind",
+  "icon": "goetyarcana:bramble_bind_focus",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Bramble Bind",
+      "text": "Hurls a thorned vine seed. The seed roots itself and waits; when something hostile steps into its 3x3 ground, brambles erupt and bind it fast for 5 seconds. The trap lingers until its ten seconds run out, and anything else that wanders in gets caught too - unable to move, use items or cast, bosses included. The red thorns bite for 2 damage every second."
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:bramble_bind_focus"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Gifts of the Wilds",
+      "text": "Cast with a Wild Staff, the ground widens to 7x7, the bind lasts 15 seconds, and up to 16 targets can be caught at once. Wearing a Wild Robe widens it further to 9x9 (the robe overrides the staff), and the thorns begin to weep poison."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Vine Poison",
+      "text": "With a Wild Robe, bound targets are poisoned for as long as they stay bound. It strikes once a second and grows harsher each time, ignoring armour, resistances, enchantments and invulnerability frames, and no healing can touch the victim while it lasts - the undead and even effect-immune bosses bleed under it. Fifteen seconds of this ends most things."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:bramble_bind_focus": 1
+  }
+}
