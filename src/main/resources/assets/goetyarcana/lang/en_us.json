@@ -56,5 +56,7 @@
   "message.goetyarcana.amulet.missing": "You are not carrying a Void Amulet.",
   "effect.goetyarcana.void_aegis": "Void Aegis",
   "effect.goetyarcana.void_aegis.description": "The void takes the blow for you; the aegis fades with time - full immunity at first, gone after ten minutes.",
-  "message.goetyarcana.amulet.aegis": "Void Aegis: the amulet answered your death."
+  "message.goetyarcana.amulet.aegis": "Void Aegis: the amulet answered your death.",
+  "effect.goetyarcana.bomb_curse": "Bomb Curse",
+  "effect.goetyarcana.bomb_curse.description": "What is left after a void creeper blast you survived: all damage taken +40%, explosion damage +80%."
 }

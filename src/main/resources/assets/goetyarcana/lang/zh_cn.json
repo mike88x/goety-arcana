@@ -56,5 +56,7 @@
   "message.goetyarcana.amulet.missing": "你身上没有虚空护身符。",
   "effect.goetyarcana.void_aegis": "虚空恩庇",
   "effect.goetyarcana.void_aegis.description": "虚空替你挡下伤害，但这份庇护会随时间消退：一开始完全免疫，十分钟后回到原样。",
-  "message.goetyarcana.amulet.aegis": "虚空恩庇：护身符回应了你的濒死。"
+  "message.goetyarcana.amulet.aegis": "虚空恩庇：护身符回应了你的濒死。",
+  "effect.goetyarcana.bomb_curse": "砰砰诅咒",
+  "effect.goetyarcana.bomb_curse.description": "被虚空苦力怕炸过却没死的后遗症：受到的所有伤害增加 40%，爆炸伤害增加 80%。"
 }

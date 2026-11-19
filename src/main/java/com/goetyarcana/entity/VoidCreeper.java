@@ -50,6 +50,9 @@ public class VoidCreeper extends Monster {
             SynchedEntityData.defineId(VoidCreeper.class, EntityDataSerializers.INT);
 
     private int stareTicks;
+    /** 激怒来源：可能是玩家，也可能是打了它的其它生物。 */
+    @Nullable
+    private LivingEntity angerSource;
     private int fuseTicks = VoidBlastBalance.VOID_CREEPER_FUSE_TICKS;
     private boolean exploded;
     private boolean lootDropped;
@@ -108,20 +111,28 @@ public class VoidCreeper extends Monster {
     private void neutralTick() {
         Player watcher = this.findWatcher();
         if (watcher != null) {
+            // 无论什么模式都会回看
             this.getLookControl().setLookAt(watcher, 40.0F, 40.0F);
+            if (watcher.isCreative()) {
+                // 创造模式不会被激怒：只对视，不累积、不出声、不下粒子
+                this.stareTicks = Math.max(0, this.stareTicks - 2);
+                this.entityData.set(DATA_ALERT, 0);
+                return;
+            }
             this.stareTicks = Math.min(VoidBlastBalance.VOID_CREEPER_STARE_TICKS,
                     this.stareTicks + 1);
-            if (this.level() instanceof ServerLevel server && this.stareTicks % 10 == 0) {
+            if (this.stareTicks > 0 && this.stareTicks % 10 == 0
+                    && this.level() instanceof ServerLevel server) {
                 server.sendParticles(ParticleTypes.WITCH,
                         this.getX(), this.getY() + this.getBbHeight() * 0.8D, this.getZ(),
                         2, 0.25D, 0.25D, 0.25D, 0.0D);
             }
-            if (this.stareTicks % 40 == 0) {
+            if (this.stareTicks > 0 && this.stareTicks % 40 == 0) {
                 this.level().playSound(null, this.blockPosition(), SoundEvents.CREEPER_PRIMED,
                         SoundSource.HOSTILE, 0.35F, 1.6F);
             }
-            // 警告动画：对视过半、接近满的时间点各提示一次（血条上方的动作栏文字 + 音效）
-            if ((this.stareTicks == 100 || this.stareTicks == 160) && watcher != null) {
+            // 警告：对视过半、接近满的时间点各提示一次
+            if (this.stareTicks == 100 || this.stareTicks == 160) {
                 watcher.displayClientMessage(net.minecraft.network.chat.Component
                         .translatable("message.goetyarcana.void_creeper.stare"), true);
                 this.level().playSound(null, watcher.blockPosition(),
@@ -137,7 +148,8 @@ public class VoidCreeper extends Monster {
         this.entityData.set(DATA_ALERT, this.stareTicks);
     }
 
-    private void becomeAngry(@Nullable Player watcher) {
+    private void becomeAngry(@Nullable LivingEntity watcher) {
+        this.angerSource = watcher;
         this.entityData.set(DATA_ANGRY, true);
         this.entityData.set(DATA_ALERT, VoidBlastBalance.VOID_CREEPER_STARE_TICKS);
         this.level().playSound(null, this.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE,
@@ -149,7 +161,10 @@ public class VoidCreeper extends Monster {
     }
 
     private void angryTick() {
-        Player target = this.level().getNearestPlayer(this, 32.0D);
+        LivingEntity target = this.angerSource;
+        if (target == null || !target.isAlive() || target.distanceToSqr(this) > 32.0D * 32.0D) {
+            target = this.level().getNearestPlayer(this, 32.0D);
+        }
         if (target == null || target.distanceToSqr(this) > 24.0D * 24.0D) {
             // 玩家跑远了就像原版苦力怕一样不再引爆
             this.discard();
@@ -223,10 +238,18 @@ public class VoidCreeper extends Monster {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (!this.isAngry() && source.getEntity() instanceof Player attacker) {
-            // 被玩家打了也会立刻进入愤怒
-            this.stareTicks = VoidBlastBalance.VOID_CREEPER_STARE_TICKS;
-            this.becomeAngry(attacker);
+        if (!this.isAngry()) {
+            if (source.getEntity() instanceof Player attacker) {
+                if (!attacker.isCreative()) {
+                    // 被非创造的玩家打了会立刻进入愤怒
+                    this.stareTicks = VoidBlastBalance.VOID_CREEPER_STARE_TICKS;
+                    this.becomeAngry(attacker);
+                }
+            } else if (source.getEntity() instanceof LivingEntity attacker) {
+                // 其它生物打了它，也会激怒它，并且它会去找那个生物
+                this.stareTicks = VoidBlastBalance.VOID_CREEPER_STARE_TICKS;
+                this.becomeAngry(attacker);
+            }
         }
         if (this.isAngry() && !this.exploded) {
             // 瞬移 + 引信这段 50% 全类型减伤
@@ -272,6 +295,16 @@ public class VoidCreeper extends Monster {
             }
             double factor = 1.0D - (distance / radius) * (1.0D - VoidBlastBalance.EXPLOSION_MIN_FACTOR);
             victim.hurt(this.damageSources().explosion(this, this), (float) (power * factor));
+            if (victim instanceof Player player && player.isAlive() && !player.isCreative()) {
+                // 没被炸死：按距离给砰砰诅咒，越近越久（30 秒 ~ 3 分钟）
+                double t = net.minecraft.util.Mth.clamp(distance / radius, 0.0D, 1.0D);
+                int ticks = (int) Math.round(com.goetyarcana.effect.BombCurseEffect.MAX_TICKS
+                        - (com.goetyarcana.effect.BombCurseEffect.MAX_TICKS
+                            - com.goetyarcana.effect.BombCurseEffect.MIN_TICKS) * t);
+                player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                        com.goetyarcana.registry.ModEffects.BOMB_CURSE.get(), ticks, 0,
+                        false, true, true));
+            }
         }
         // 自定义爆炸表现：冲击波环 + 虚空火 + 反向传送门，不用原版的爆炸云
         com.goetyarcana.combat.VoidBlastVisuals.explode(server,

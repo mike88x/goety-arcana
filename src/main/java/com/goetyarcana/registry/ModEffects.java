@@ -36,6 +36,10 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> VINE_POISON =
             EFFECTS.register("vine_poison", com.goetyarcana.effect.VinePoisonEffect::new);
 
+    /** 砰砰诅咒：没被虚空苦力怕炸死的玩家受到的易伤。 */
+    public static final RegistryObject<MobEffect> BOMB_CURSE =
+            EFFECTS.register("bomb_curse", com.goetyarcana.effect.BombCurseEffect::new);
+
     /** 虚空恩庇：护身符救命后被炸出来的减伤，随时间衰减。 */
     public static final RegistryObject<MobEffect> VOID_AEGIS =
             EFFECTS.register("void_aegis", com.goetyarcana.effect.VoidAegisEffect::new);

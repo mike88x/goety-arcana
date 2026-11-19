@@ -54,8 +54,10 @@ public class VoidAmuletCurioRenderer implements ICurioRenderer {
         // 走路摆动 + 呼吸起伏
         float sway = Mth.sin(ageInTicks * 0.13F) * 0.10F + limbSwingAmount * 0.06F;
         // 方片的 V 方向是反的：先转 180° 让牙朝下、红绳在上
-        pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(180.0F + sway * 22.0F));
-        pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(8.0F));
+        pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(180.0F + sway * 18.0F));
+        // 斜挂：绕 Y 偏一点、绕 X 前倾贴住胸口弧度
+        pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-18.0F));
+        pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(10.0F));
         drawQuad(pose, buffers, light, ageInTicks, 1.0F, 1.0F, 1.0F);
 
         pose.popPose();
