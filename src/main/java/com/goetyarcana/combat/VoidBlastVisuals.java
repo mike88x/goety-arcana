@@ -22,7 +22,8 @@ public final class VoidBlastVisuals {
         server.sendParticles(ModParticles.VOID_FLAME.get(), x, y, z, 45, 1.1D, 0.8D, 1.1D, 0.06D);
         server.sendParticles(ParticleTypes.REVERSE_PORTAL, x, y, z, 60, 1.2D, 0.9D, 1.2D, 0.14D);
         server.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x, y, z, 18, 0.8D, 0.5D, 0.8D, 0.05D);
-        server.playSound(null, x, y, z, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 1.3F, 0.85F);
-        server.playSound(null, x, y, z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 0.9F, 0.5F);
+        server.playSound(null, x, y, z, com.goetyarcana.registry.ModSounds.VOID_EXPLOSION.get(),
+                SoundSource.HOSTILE, 1.6F, 1.0F);
+        server.playSound(null, x, y, z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 0.7F, 0.5F);
     }
 }

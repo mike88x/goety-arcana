@@ -50,6 +50,9 @@ public final class ModNetwork {
                 .consumerMainThread(ExecutionDeathPacket::handle)
                 .add();
 
+        CHANNEL.messageBuilder(SoulHeartsPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SoulHeartsPacket::encode).decoder(SoulHeartsPacket::decode)
+                .consumerMainThread(SoulHeartsPacket::handle).add();
         CHANNEL.messageBuilder(VoidCursePacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(VoidCursePacket::encode)
                 .decoder(VoidCursePacket::decode)
@@ -58,6 +61,12 @@ public final class ModNetwork {
     }
 
     /** 把「某只生物中了砰砰诅咒」告诉附近客户端（BOSS 上效果会被即时清掉，只能这样同步）。 */
+    public static void sendSoulHearts(net.minecraft.server.level.ServerLevel level,
+                                      net.minecraft.world.entity.player.Player player, int hearts) {
+        CHANNEL.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+                new SoulHeartsPacket(player.getId(), hearts));
+    }
+
     public static void sendVoidCurse(ServerLevel level, Entity target, int durationTicks) {
         VoidCursePacket packet = new VoidCursePacket(target.getId(), durationTicks);
         double range = 96.0D * 96.0D;

@@ -35,6 +35,7 @@ public class GoetyArcanaMod {
         ModEntities.register(modBus);
         ModEffects.register(modBus);
         ModParticles.register(modBus);
+        com.goetyarcana.registry.ModSounds.register(modBus);
         ModCreativeTabs.register(modBus);
         ModNetwork.register();
         // 注意：SpawnPlacements 必须在 FMLCommonSetup（实体已注册）里登记，

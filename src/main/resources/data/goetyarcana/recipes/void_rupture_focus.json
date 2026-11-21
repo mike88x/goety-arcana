@@ -9,13 +9,13 @@
   "duration": 7,
   "ingredients": [
     {
+      "item": "goetyarcana:void_shard"
+    },
+    {
       "item": "minecraft:gunpowder"
     },
     {
       "item": "goety:void_bottle"
-    },
-    {
-      "item": "minecraft:gunpowder"
     },
     {
       "item": "goety:void_bottle"

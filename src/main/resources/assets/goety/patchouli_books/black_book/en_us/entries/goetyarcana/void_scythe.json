@@ -16,6 +16,11 @@
       "type": "patchouli:text",
       "title": "Void Erosion & Execution",
       "text": "Sweeps apply Void Erosion, while every hit has a small chance to mark the target for Execution. When the mark expires, a giant scythe descends and the target is judged: ordinary foes are erased, elites and bosses lose a portion of their maximum health."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "On the Form",
+      "text": "The scythe's form is also being redone: it still uses the old mould, and the new one will be opened together with the Void armor plates. Its sweep, crescent and execution feel are unaffected."
     }
   ],
   "extra_recipe_mappings": {

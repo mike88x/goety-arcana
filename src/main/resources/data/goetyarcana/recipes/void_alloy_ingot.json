@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SNS"
+  ],
+  "key": {
+    "S": {
+      "item": "goetyarcana:void_shard"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "item": "goetyarcana:void_alloy_ingot"
+  }
+}

@@ -181,7 +181,8 @@ public final class VoidAmuletEvents {
      * 致命伤害：以玩家为中心炸一次（中心 50 点，向边缘递减），把周围怪物实际受到的伤害总和
      * 的 50% 转成治疗，并给予「虚空恩庇」（减伤随时间从 100% 降到 0%，共 10 分钟）。
      */
-    @SubscribeEvent(priority = net.minecraftforge.eventbus.api.EventPriority.LOWEST)
+    /** 优先级 LOW：先于灵魂套（LOWEST）判定，护符能救就不进灵魂形态。 */
+    @SubscribeEvent(priority = net.minecraftforge.eventbus.api.EventPriority.LOW)
     public static void onFatalDamage(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
         if (event.getEntity().level().isClientSide()) {
             return;

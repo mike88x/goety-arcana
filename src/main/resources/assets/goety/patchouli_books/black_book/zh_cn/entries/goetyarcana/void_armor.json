@@ -1,0 +1,46 @@
+{
+  "name": "虚空套",
+  "icon": "goetyarcana:void_chestplate",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "虚空合金，是把下界合金遗落在世界之间的空隙里太久之后剩下的东西：重量还在，却不再反光。奥术的铁匠管它叫「吃火把的锭」。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "把它锻到下界合金甲片上，得到的与其说是护具，不如说是一种「拒绝」——拒绝让虚空把人带走。每片甲上刻着一道吞掉少许光线的符文，整套并不向铁砧低头，而是向灵魂能量低头：只要还有灵魂可以喂养，甲片就会自己重新拼合。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "它在敌人身上留下的不是伤口，而是约定——五道之后，约定到期。"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_helmet"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_chestplate"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_leggings"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_boots"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "形制说明",
+      "text": "这批甲片目前的形制还是工匠们的草样：轮廓先按旧甲铺开，等虚空镰刀的模子定下来，会一并重新开模。功能不受影响，穿它上阵没有问题。"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_helmet": 3,
+    "goetyarcana:void_chestplate": 4,
+    "goetyarcana:void_leggings": 5,
+    "goetyarcana:void_boots": 6
+  }
+}

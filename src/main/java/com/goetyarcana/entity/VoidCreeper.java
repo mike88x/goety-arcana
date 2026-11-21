@@ -294,7 +294,9 @@ public class VoidCreeper extends Monster {
                 continue;
             }
             double factor = 1.0D - (distance / radius) * (1.0D - VoidBlastBalance.EXPLOSION_MIN_FACTOR);
-            victim.hurt(this.damageSources().explosion(this, this), (float) (power * factor));
+            float hostileBonus = hostileBonus(server, victim);
+            victim.hurt(this.damageSources().explosion(this, this),
+                    (float) (power * factor * hostileBonus));
             if (victim instanceof Player player && player.isAlive() && !player.isCreative()) {
                 // 没被炸死：按距离给砰砰诅咒，越近越久（30 秒 ~ 3 分钟）
                 double t = net.minecraft.util.Mth.clamp(distance / radius, 0.0D, 1.0D);
@@ -306,6 +308,9 @@ public class VoidCreeper extends Monster {
                         false, true, true));
             }
         }
+        // 爆炸后让正在打它的敌人立刻失去仇恨
+        clearAggroOnAttackers(server);
+
         // 自定义爆炸表现：冲击波环 + 虚空火 + 反向传送门，不用原版的爆炸云
         com.goetyarcana.combat.VoidBlastVisuals.explode(server,
                 this.getX(), this.getY() + 0.4D, this.getZ());
@@ -316,6 +321,30 @@ public class VoidCreeper extends Monster {
         server.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EXPLODE,
                 SoundSource.HOSTILE, 1.2F, 0.9F);
         this.discard();
+    }
+
+    /** 爆炸后：正在以它为目标的生物立刻放弃仇恨。 */
+    private void clearAggroOnAttackers(ServerLevel server) {
+        for (net.minecraft.world.entity.Mob mob : server.getEntitiesOfClass(
+                net.minecraft.world.entity.Mob.class, this.getBoundingBox().inflate(32.0D),
+                mob -> mob.getTarget() == this)) {
+            mob.setTarget(null);
+            mob.setLastHurtByMob(null);
+            mob.setLastHurtMob(null);
+        }
+    }
+
+    /** 对敌对生物：简单 +40%、普通 +50%、困难 +60%。 */
+    private static float hostileBonus(ServerLevel server, LivingEntity victim) {
+        if (!(victim instanceof net.minecraft.world.entity.monster.Enemy)) {
+            return 1.0F;
+        }
+        return switch (server.getDifficulty()) {
+            case EASY -> 1.4F;
+            case NORMAL -> 1.5F;
+            case HARD -> 1.6F;
+            default -> 1.0F;
+        };
     }
 
     // ---------------------------------------------------------------- 掉落

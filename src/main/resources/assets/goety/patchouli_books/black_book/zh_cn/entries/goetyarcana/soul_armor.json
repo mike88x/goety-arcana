@@ -1,0 +1,46 @@
+{
+  "name": "灵魂套",
+  "icon": "goetyarcana:soul_chestplate",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "灵魂铁只是把普通的铁淬进灵质里。金属并没有变硬，只是更饿了：它记得那团灵魂冷却它时的形状，并且一直想要还回去。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "用它做出的甲会饮下主人所杀之物。每一次命中有机会从同一具躯体里再撕开一道伤——一道任何护甲都挡不住的、直入灵魂的裂口。当主人安稳满血时，铁会把多余的收集起来，凝成淡蓝色的小心，可以花掉换取更重的一击。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "若主人倒下，铁也不会立刻松手：他会以灵魂的形态再走一段，用自己正在熄灭的光点燃一切，然后随那道光一起离开。"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_helmet"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_chestplate"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_leggings"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_boots"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "形制说明",
+      "text": "灵魂甲的形制同样还在调整：眼下的样子是先让灵质附着在旧甲轮廓上，真正的模子会与虚空套一同开。功能已实装，锻出来即可用。"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:soul_helmet": 3,
+    "goetyarcana:soul_chestplate": 4,
+    "goetyarcana:soul_leggings": 5,
+    "goetyarcana:soul_boots": 6
+  }
+}

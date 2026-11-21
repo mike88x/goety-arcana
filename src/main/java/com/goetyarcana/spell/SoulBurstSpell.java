@@ -74,6 +74,15 @@ public class SoulBurstSpell extends Spell {
         bolt.setExtraDamage(potency * SoulBurstBalance.POTENCY_BONUS);
         bolt.setOwner(caster);
 
+        // 穿齐虚空套时射弹会追踪：整体降速才拐得过来（不追踪时保持原速）
+        if (caster instanceof net.minecraft.world.entity.player.Player player
+                && com.goetyarcana.event.VoidArmorEvents.isFullSet(player)) {
+            Vec3 dir = bolt.getDeltaMovement();
+            if (dir.lengthSqr() > 1.0E-6D) {
+                bolt.setDeltaMovement(dir.normalize().scale(SoulBurstBalance.HOMING_SPEED));
+            }
+        }
+
         level.addFreshEntity(bolt);
         this.playSound(level, caster, 1.0F, 1.2F);
     }

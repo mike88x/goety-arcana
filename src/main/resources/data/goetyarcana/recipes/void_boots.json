@@ -1,0 +1,27 @@
+{
+  "type": "goety:ritual",
+  "ritual_type": "goety:craft",
+  "craftType": "end",
+  "soulCost": 10,
+  "duration": 20,
+  "activation_item": {
+    "item": "minecraft:netherite_boots"
+  },
+  "ingredients": [
+    {
+      "item": "goetyarcana:void_alloy_ingot"
+    },
+    {
+      "item": "goetyarcana:void_alloy_ingot"
+    },
+    {
+      "item": "goety:occult_fabric"
+    },
+    {
+      "item": "goety:void_block"
+    }
+  ],
+  "result": {
+    "item": "goetyarcana:void_boots"
+  }
+}

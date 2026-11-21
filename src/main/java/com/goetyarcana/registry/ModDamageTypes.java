@@ -31,6 +31,10 @@ public final class ModDamageTypes {
             Registries.DAMAGE_TYPE,
             new ResourceLocation(GoetyArcanaMod.MOD_ID, "execution"));
 
+    public static final ResourceKey<DamageType> SOUL = ResourceKey.create(
+            Registries.DAMAGE_TYPE,
+            new net.minecraft.resources.ResourceLocation(GoetyArcanaMod.MOD_ID, "soul"));
+
     public static final ResourceKey<DamageType> VOID_AMULET = ResourceKey.create(
             Registries.DAMAGE_TYPE,
             new ResourceLocation(GoetyArcanaMod.MOD_ID, "void_amulet"));

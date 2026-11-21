@@ -33,7 +33,35 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.VOID_RUPTURE_FOCUS.get());
                         output.accept(ModItems.VOID_SHARD.get());
                         output.accept(ModItems.VOID_CREEPER_HEAD.get());
+
+                        output.accept(ModItems.VOID_HELMET.get());
+
+                        output.accept(ModItems.VOID_CHESTPLATE.get());
+
+                        output.accept(ModItems.VOID_LEGGINGS.get());
+
+                        output.accept(ModItems.VOID_BOOTS.get());
+
+                        output.accept(ModItems.SOUL_HELMET.get());
+
+                        output.accept(ModItems.SOUL_CHESTPLATE.get());
+
+                        output.accept(ModItems.SOUL_LEGGINGS.get());
+
+                        output.accept(ModItems.SOUL_BOOTS.get());
+                        output.accept(ModItems.VOID_ALLOY_INGOT.get());
+                        output.accept(ModItems.SOUL_IRON_INGOT.get());
                         output.accept(ModItems.VOID_AMULET.get());
+                        output.accept(ModItems.VOID_HELMET.get());
+                        output.accept(ModItems.VOID_CHESTPLATE.get());
+                        output.accept(ModItems.VOID_LEGGINGS.get());
+                        output.accept(ModItems.VOID_BOOTS.get());
+                        output.accept(ModItems.SOUL_HELMET.get());
+                        output.accept(ModItems.SOUL_CHESTPLATE.get());
+                        output.accept(ModItems.SOUL_LEGGINGS.get());
+                        output.accept(ModItems.SOUL_BOOTS.get());
+                        output.accept(ModItems.VOID_ALLOY_INGOT.get());
+                        output.accept(ModItems.SOUL_IRON_INGOT.get());
                         output.accept(ModItems.VOID_CREEPER_SPAWN_EGG.get());
                         output.accept(ModItems.VOID_CREEPER_SERVANT_SPAWN_EGG.get());
                         output.accept(ModItems.ENCHANTED_VOID_CREEPER_SERVANT_SPAWN_EGG.get());

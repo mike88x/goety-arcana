@@ -1,0 +1,46 @@
+{
+  "name": "Void Armor",
+  "icon": "goetyarcana:void_chestplate",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Void Alloy is what remains when Netherite is left too long in the space between worlds: the metal keeps its weight, but stops reflecting light. Smiths of the Arcana call it \"the ingot that eats the torch\"."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Forged onto Netherite plate it becomes armor that does not so much protect the wearer as refuse to let the Void take him. Each plate carries a rune that drinks a little of the world's light, and the set answers to soul energy rather than to an anvil: as long as there is soul to feed it, the plates knit themselves back together."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The marks it leaves on enemies are not wounds but promises - five of them, and the promise comes due."
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_helmet"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_chestplate"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_leggings"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:void_boots"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "On the Form",
+      "text": "The plates you see now are the smiths' working draft: the silhouette was laid over the old armor so the pieces could be worn, and it will be recast once the Void Scythe's mould is settled. Nothing is missing from how it works - it is ready to wear into a fight."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:void_helmet": 3,
+    "goetyarcana:void_chestplate": 4,
+    "goetyarcana:void_leggings": 5,
+    "goetyarcana:void_boots": 6
+  }
+}

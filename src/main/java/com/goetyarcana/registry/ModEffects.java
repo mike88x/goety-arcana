@@ -36,6 +36,14 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> VINE_POISON =
             EFFECTS.register("vine_poison", com.goetyarcana.effect.VinePoisonEffect::new);
 
+    /** 虚空印记：减防减伤，满 5 层爆炸。 */
+    public static final RegistryObject<MobEffect> VOID_MARK =
+            EFFECTS.register("void_mark", com.goetyarcana.effect.VoidMarkEffect::new);
+
+    /** 灵魂形态：灵魂套的濒死状态。 */
+    public static final RegistryObject<MobEffect> SOUL_FORM =
+            EFFECTS.register("soul_form", com.goetyarcana.effect.SoulFormEffect::new);
+
     /** 砰砰诅咒：没被虚空苦力怕炸死的玩家受到的易伤。 */
     public static final RegistryObject<MobEffect> BOMB_CURSE =
             EFFECTS.register("bomb_curse", com.goetyarcana.effect.BombCurseEffect::new);

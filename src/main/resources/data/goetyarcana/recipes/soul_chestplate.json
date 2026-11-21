@@ -1,0 +1,39 @@
+{
+  "type": "goety:ritual",
+  "ritual_type": "goety:craft",
+  "craftType": "forge",
+  "soulCost": 5,
+  "duration": 9,
+  "activation_item": {
+    "item": "minecraft:iron_chestplate"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_block"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "result": {
+    "item": "goetyarcana:soul_chestplate"
+  }
+}

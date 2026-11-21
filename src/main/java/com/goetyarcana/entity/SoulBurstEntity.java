@@ -59,6 +59,17 @@ public class SoulBurstEntity extends SpellHurtingProjectile {
     /** 虚空之蚀持续时间：5 秒 */
     private static final int VOID_TOUCHED_TICKS = 100;
 
+    /** 虚空套追踪：转向系数、搜索半径、前向锥角、重选目标间隔。 */
+    private static final double HOMING_TURN = 0.50D;
+    private static final double HOMING_RANGE = 26.0D;
+    private static final double HOMING_CONE = -0.20D;
+    private static final int RETARGET_INTERVAL = 4;
+    private LivingEntity trackTarget;
+    /** 上一 tick 记录的目标位置，用来识别「传送」。 */
+    private net.minecraft.world.phys.Vec3 lastTargetPos;
+    /** 上一 tick 的 target id，换目标时重置 lastTargetPos。 */
+    private int lastTargetId = -1;
+
     /** 是否由虚空系法杖（虚空魔杖）施放 */
     private boolean voidCharged;
 
@@ -113,24 +124,98 @@ public class SoulBurstEntity extends SpellHurtingProjectile {
     @Override
     public void travel() {
         Vec3 velocity = this.getDeltaMovement();
+        if (!this.level().isClientSide) {
+            velocity = this.homeTowardsTarget(velocity);
+        }
         this.setPos(this.getX() + velocity.x, this.getY() + velocity.y, this.getZ() + velocity.z);
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-        if (!this.level().isClientSide && this.tickCount > SoulBurstBalance.PROJECTILE_LIFETIME) {
-            // 虚空魔杖：飞到寿命尽头、什么都没碰到也会炸开
-            if (this.voidCharged && !this.exploded && this.level() instanceof ServerLevel serverLevel) {
-                this.groundExplosion(serverLevel);
-            }
-            this.discard();
+    /** 虚空套玩家施放时：准星优先锁敌、带提前量与视线判定。 */
+    private Vec3 homeTowardsTarget(Vec3 velocity) {
+        Entity owner = this.getOwner();
+        if (!(owner instanceof net.minecraft.world.entity.player.Player player)
+                || !com.goetyarcana.event.VoidArmorEvents.isFullSet(player)) {
+            return velocity;
         }
+        if (this.trackTarget != null && !this.isValidTarget(this.trackTarget)) {
+            this.trackTarget = null;
+        }
+        // 距离目标 8 格内就锁定，不再重新选目标（临近命中时突然改目标 = 看起来「贴脸转弯」）
+        boolean locked = this.trackTarget != null
+                && this.trackTarget.distanceToSqr(this) < 64.0D;
+        if (!locked && (this.trackTarget == null || this.tickCount % RETARGET_INTERVAL == 0)) {
+            LivingEntity previous = this.trackTarget;
+            this.trackTarget = com.goetyarcana.combat.Homing.bestTarget(this, player,
+                    this.position(), velocity, HOMING_RANGE, HOMING_CONE, this::canHomingHit);
+            if (previous != this.trackTarget) {
+                com.goetyarcana.GoetyArcanaMod.LOGGER.debug(
+                        "[soul_burst] retarget {} -> {} at {}", previous,
+                        this.trackTarget, this.position());
+            }
+        }
+        if (this.trackTarget == null) {
+            return velocity;
+        }
+        // 目标一 tick 内跳得太远 = 传送（末影人等）：不追旧坐标，直接换目标
+        if (this.trackTarget != null && this.lastTargetPos != null
+                && this.lastTargetId == this.trackTarget.getId()
+                && this.lastTargetPos.distanceToSqr(this.trackTarget.position()) > 36.0D) {
+            this.trackTarget = null;
+            this.lastTargetPos = null;
+            this.lastTargetId = -1;
+        }
+        if (this.trackTarget != null) {
+            this.lastTargetPos = this.trackTarget.position();
+            this.lastTargetId = this.trackTarget.getId();
+        }
+
+
+        double speed = Math.max(0.6D, velocity.length());
+        Vec3 aim = com.goetyarcana.combat.Homing.leadPoint(this.trackTarget, this.position(),
+                speed, 0.60D);
+        double distance = aim.length();
+        if (distance < 0.3D) {
+            return velocity;
+        }
+        // 贴到目标身上就别再绕圈了，直接引爆
+        if (distance < 1.6D && !this.exploded
+                && this.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            this.groundExplosion(serverLevel);
+            this.discard();
+            return velocity;
+        }
+        // 与虚空弩一致：保持速度，每 tick 直接朝目标插值转向
+        Vec3 motion = com.goetyarcana.combat.Homing.turn(velocity, aim, HOMING_TURN, distance);
+        this.setDeltaMovement(motion);
+        Vec3 dir = motion.normalize();
+        this.setYRot((float) Math.toDegrees(Math.atan2(-dir.x, dir.z)));
+        this.setXRot((float) Math.toDegrees(Math.atan2(-dir.y,
+                Math.sqrt(dir.x * dir.x + dir.z * dir.z))));
+        return motion;
+    }
+
+    /** 缓存目标是否仍然能追：存活、未被移除、同维度、在范围内、非主人。 */
+    private boolean isValidTarget(LivingEntity candidate) {
+        return candidate != null
+                && candidate != this.getOwner()
+                && candidate.isAlive()
+                && !candidate.isRemoved()
+                && candidate.level() == this.level()
+                && candidate.distanceToSqr(this) <= HOMING_RANGE * HOMING_RANGE
+                && !candidate.isSpectator()
+                && !isProtected(candidate);
+    }
+
+    private boolean canHomingHit(LivingEntity candidate) {
+        return candidate.isAlive() && candidate != this.getOwner() && !candidate.isSpectator()
+                && !isProtected(candidate);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
+        // 命中后松掉追踪，避免继续拐向已经打中的目标
+        this.trackTarget = null;
         if (this.level().isClientSide) {
             return;
         }

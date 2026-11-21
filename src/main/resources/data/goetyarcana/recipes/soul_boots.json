@@ -1,0 +1,27 @@
+{
+  "type": "goety:ritual",
+  "ritual_type": "goety:craft",
+  "craftType": "forge",
+  "soulCost": 5,
+  "duration": 9,
+  "activation_item": {
+    "item": "minecraft:iron_boots"
+  },
+  "ingredients": [
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "goetyarcana:soul_iron_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "result": {
+    "item": "goetyarcana:soul_boots"
+  }
+}

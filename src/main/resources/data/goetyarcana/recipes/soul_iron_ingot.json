@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "EIE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "goety:ectoplasm"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "goetyarcana:soul_iron_ingot"
+  }
+}

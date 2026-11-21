@@ -1,0 +1,46 @@
+{
+  "name": "Soul Armor",
+  "icon": "goetyarcana:soul_chestplate",
+  "category": "goety:goetyarcana",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Soul Iron is ordinary iron quenched in ectoplasm. The metal does not become harder, only hungrier: it remembers the shape of the soul that cooled it, and keeps trying to return to it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Armor made from it drinks what its wearer kills. Every blow that lands may tear a second wound out of the same flesh - a soul-deep cut that no plate can stop. When the wearer is whole and at rest, the iron gathers the leftovers into pale blue hearts that can be spent to strike harder."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Should the wearer fall, the iron refuses to let go at once: he walks a little longer as a soul, burning whatever he touches with his own departing light, and then follows it out."
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_helmet"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_chestplate"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_leggings"
+    },
+    {
+      "type": "goety:ritual",
+      "recipe": "goetyarcana:soul_boots"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "On the Form",
+      "text": "The Soul armor's form is still being adjusted in much the same way: for now the ectoplasm sits on the old plate outline. The true mould will be opened together with the Void set. Its effects are already in place - once forged, it works."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "goetyarcana:soul_helmet": 3,
+    "goetyarcana:soul_chestplate": 4,
+    "goetyarcana:soul_leggings": 5,
+    "goetyarcana:soul_boots": 6
+  }
+}

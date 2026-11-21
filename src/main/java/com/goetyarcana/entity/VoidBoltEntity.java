@@ -211,32 +211,9 @@ public class VoidBoltEntity extends AbstractArrow {
 
     @Nullable
     private LivingEntity findTrackTarget() {
-        Vec3 look = this.getDeltaMovement();
-        look = look.lengthSqr() > 1.0E-6D ? look.normalize() : new Vec3(0.0D, 0.0D, 1.0D);
-
-        LivingEntity best = null;
-        double bestScore = Double.NEGATIVE_INFINITY;
-        for (LivingEntity candidate : this.level().getEntitiesOfClass(LivingEntity.class,
-                this.getBoundingBox().inflate(TRACK_RANGE), this::canTrack)) {
-            Vec3 to = new Vec3(candidate.getX(),
-                    candidate.getY() + candidate.getBbHeight() * 0.55D,
-                    candidate.getZ()).subtract(this.position());
-            double distance = to.length();
-            if (distance < 0.5D) {
-                continue;
-            }
-            double dot = to.scale(1.0D / distance).dot(look);
-            if (dot < TRACK_CONE) {
-                continue;
-            }
-            // 越正对、越近越优先；贴脸的目标额外加分。
-            double score = dot * 1.2D - distance * 0.06D + Math.max(0.0D, 3.0D - distance) * 0.3D;
-            if (score > bestScore) {
-                bestScore = score;
-                best = candidate;
-            }
-        }
-        return best;
+        Vec3 heading = this.getDeltaMovement();
+        return com.goetyarcana.combat.Homing.bestTarget(this, this.getOwner(),
+                this.position(), heading, TRACK_RANGE, TRACK_CONE, this::canTrack);
     }
 
     private boolean canTrack(LivingEntity candidate) {

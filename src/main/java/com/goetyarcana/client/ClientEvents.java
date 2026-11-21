@@ -48,6 +48,13 @@ public final class ClientEvents {
     }
 
     @SubscribeEvent
+    public static void registerLayerDefinitions(
+            net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ArcanaArmorExtrasModel.LAYER_LOCATION,
+                () -> ArcanaArmorExtrasModel.LAYER);
+    }
+
+    @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.VOID_FLAME.get(), VoidFlameParticle.Provider::new);
         event.registerSpriteSet(ModParticles.BLOOD_DRIP.get(), BloodDripParticle.Provider::new);

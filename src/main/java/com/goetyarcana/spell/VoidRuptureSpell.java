@@ -21,9 +21,12 @@ import net.minecraft.world.phys.Vec3;
  */
 public class VoidRuptureSpell extends Spell {
 
+    /** 裂魂聚晶之外的崩灭聚晶：灵魂消耗 42。 */
+    public static final int RUPTURE_SOUL_COST = 42;
+
     @Override
     public int defaultSoulCost() {
-        return VoidBlastBalance.SOUL_COST;
+        return RUPTURE_SOUL_COST;
     }
 
     @Override

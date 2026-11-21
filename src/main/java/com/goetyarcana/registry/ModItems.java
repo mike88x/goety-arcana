@@ -16,6 +16,22 @@ public final class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, GoetyArcanaMod.MOD_ID);
 
+    /** 虚空合金：虚空套的合成材料。 */
+    public static final RegistryObject<Item> VOID_ALLOY_INGOT =
+            ITEMS.register("void_alloy_ingot", () -> new Item(new Item.Properties()));
+
+    /** 灵魂铁：灵魂套的合成材料。 */
+    public static final RegistryObject<Item> SOUL_IRON_INGOT =
+            ITEMS.register("soul_iron_ingot", () -> new Item(new Item.Properties()));
+
+    /** 灵魂套的护甲材质（护甲/韧性/耐久按需求定制）。 */
+    public static final com.goetyarcana.item.SoulArmorMaterial SOUL_MATERIAL =
+            new com.goetyarcana.item.SoulArmorMaterial();
+
+    /** 虚空套的护甲材质（护甲 10/20/15/10、韧性 8/14/10/8）。 */
+    public static final com.goetyarcana.item.VoidArmorMaterial VOID_MATERIAL =
+            new com.goetyarcana.item.VoidArmorMaterial();
+
     /** 裂魂聚晶 */
     public static final RegistryObject<Item> SOUL_BURST_FOCUS =
             ITEMS.register("soul_burst_focus", SoulBurstFocus::new);
@@ -71,6 +87,54 @@ public final class ModItems {
     public static final RegistryObject<Item> VOID_AMULET =
             ITEMS.register("void_amulet", () -> new com.goetyarcana.item.VoidAmuletItem(
                     new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> VOID_HELMET =
+            ITEMS.register("void_helmet", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    VOID_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.HELMET,
+                    new Item.Properties().fireResistant(), "void"));
+
+    public static final RegistryObject<Item> VOID_CHESTPLATE =
+            ITEMS.register("void_chestplate", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    VOID_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().fireResistant(), "void"));
+
+    public static final RegistryObject<Item> VOID_LEGGINGS =
+            ITEMS.register("void_leggings", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    VOID_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().fireResistant(), "void"));
+
+    public static final RegistryObject<Item> VOID_BOOTS =
+            ITEMS.register("void_boots", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    VOID_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.BOOTS,
+                    new Item.Properties().fireResistant(), "void"));
+
+    public static final RegistryObject<Item> SOUL_HELMET =
+            ITEMS.register("soul_helmet", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    SOUL_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.HELMET,
+                    new Item.Properties().fireResistant(), "soul"));
+
+    public static final RegistryObject<Item> SOUL_CHESTPLATE =
+            ITEMS.register("soul_chestplate", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    SOUL_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().fireResistant(), "soul"));
+
+    public static final RegistryObject<Item> SOUL_LEGGINGS =
+            ITEMS.register("soul_leggings", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    SOUL_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().fireResistant(), "soul"));
+
+    public static final RegistryObject<Item> SOUL_BOOTS =
+            ITEMS.register("soul_boots", () -> new com.goetyarcana.item.ArcanaArmorItem(
+                    SOUL_MATERIAL,
+                    net.minecraft.world.item.ArmorItem.Type.BOOTS,
+                    new Item.Properties().fireResistant(), "soul"));
 
     private ModItems() {
     }

@@ -1,0 +1,13 @@
+{
+  "void_explosion": {
+    "category": "hostile",
+    "subtitle": "subtitles.goetyarcana.void_explosion",
+    "sounds": [
+      {
+        "name": "goetyarcana:void_explosion",
+        "stream": false,
+        "attenuation_distance": 48
+      }
+    ]
+  }
+}

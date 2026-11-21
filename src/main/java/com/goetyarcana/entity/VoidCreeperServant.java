@@ -329,6 +329,7 @@ public class VoidCreeperServant extends com.Polarice3.Goety.common.entities.ally
         List<LivingEntity> victims = server.getEntitiesOfClass(LivingEntity.class, box,
                 entity -> entity != this && entity.isAlive() && !this.isAlliedTo(entity));
         this.debug("explode at " + this.blockPosition() + " victims=" + victims.size());
+        float dealtTotal = 0.0F;
         for (LivingEntity victim : victims) {
             double distance = Math.sqrt(victim.getBoundingBox().distanceToSqr(
                     this.position().add(0.0D, 0.5D, 0.0D)));
@@ -342,10 +343,12 @@ public class VoidCreeperServant extends com.Polarice3.Goety.common.entities.ally
                     this.damageSources().explosion(this, owner);
             float before = victim.getHealth();
             boolean hit = victim.hurt(source, damage);
+            dealtTotal += Math.max(0.0F, before - victim.getHealth());
             float rest = damage - Math.max(0.0F, before - victim.getHealth());
             if (rest > 0.01F && victim.isAlive()) {
                 // BOSS 的限伤会把伤害砍掉，剩的差额直接扣血
                 victim.setHealth(Math.max(0.0F, victim.getHealth() - rest));
+                dealtTotal += rest;
                 if (victim.getHealth() <= 0.0F) {
                     victim.die(source);
                 }
@@ -359,10 +362,28 @@ public class VoidCreeperServant extends com.Polarice3.Goety.common.entities.ally
             this.applyCurse(victim, now);
         }
 
+        // 虚空套：自爆把灵魂带回给主人（造成伤害的 125%）
+        returnSoul(owner, dealtTotal);
+
         this.clearAggro(server);
         com.goetyarcana.combat.VoidBlastVisuals.explode(server,
                 this.getX(), this.getY() + 0.5D, this.getZ());
         this.discard();
+    }
+
+    /** 虚空套：自爆仆从把造成伤害的 125% 作为灵魂能量还给主人。 */
+    private void returnSoul(LivingEntity owner, float dealt) {
+        if (!(owner instanceof net.minecraft.world.entity.player.Player player) || dealt <= 0.0F) {
+            return;
+        }
+        if (!com.goetyarcana.event.VoidArmorEvents.isFullSet(player)) {
+            return;
+        }
+        int gain = Math.max(1, Math.round(dealt * 1.25F));
+        player.getCapability(
+                        com.Polarice3.Goety.common.capabilities.soulenergy.SEProvider.CAPABILITY)
+                .ifPresent(energy -> energy.increaseSE(gain));
+        this.debug("soul returned=" + gain);
     }
 
     /** 爆炸伤害：附魔版覆写成闪电苦力怕的 75%。 */

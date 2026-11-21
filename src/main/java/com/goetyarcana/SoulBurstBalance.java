@@ -36,6 +36,8 @@ public final class SoulBurstBalance {
 
     /** 灵魂弹飞行速度（格/tick）。3.6 ≈ 72 格/秒，比箭快得多 */
     public static final double PROJECTILE_SPEED = 3.6D;
+    /** 有追踪（虚空套）时降低初速，转弯跟得上。 */
+    public static final double HOMING_SPEED = 2.0D;
 
     /** 射弹出生点相对眼睛沿视线方向的前移距离，0.6 ≈ 正好从准星处飞出 */
     public static final double SPAWN_OFFSET = 0.6D;
